@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Php Lecture</title>
+    <title>Php Lecture1</title>
 </head>
 <body>
     <div style="width: 50%; margin: auto; border: solid; padding: 20px;">
@@ -69,7 +69,6 @@
                 echo "$element <br>";
             }
         ?>
-
         <hr><hr>
     </div>
 </body>
