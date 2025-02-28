@@ -1,3 +1,6 @@
+<?php
+    include("questions.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,24 +33,26 @@
     </style>
 </head>
 <body>
+    
     <form action="" method="post">
-        <p>Which of the following is a programming language?</p>
-        <input type="radio" name="q1" value="Python"> Python <br>
-        <input type="radio" name="q1" value="JavaScript"> JavaScript <br>
-        <input type="radio" name="q1" value="HTML"> HTML <br>
-        <input type="radio" name="q1" value="CSS"> CSS <br>
+        <?php
+            for ($i = 0; $i < count($questions); $i++) {
+        ?>
+        
+            <p><?=$questions[$i]['question']?></p>
+            
+            <?php
+                foreach ($questions[ $i ]['options'] as $option) {
+            ?>
 
-        <p>Which of these is used to style a webpage?</p>
-        <input type="radio" name="q2" value="CSS"> CSS <br>
-        <input type="radio" name="q2" value="PHP"> PHP <br>
-        <input type="radio" name="q2" value="JavaScript"> JavaScript <br>
-        <input type="radio" name="q2" value="SQL"> SQL <br>
-
-        <p>Which of these is a database?</p>
-        <input type="radio" name="q3" value="MySQL"> MySQL <br>
-        <input type="radio" name="q3" value="Bizagi"> Bizagi <br>
-        <input type="radio" name="q3" value="SSM"> SSM <br>
-        <input type="radio" name="q3" value="Python"> Python <br>
+                <input type="radio" name="<?= $questions[$i]['name']?>" value="<?=$option?>"> <?=$option?> <br>
+            
+            <?php
+                }
+            ?>
+        <?php
+            }
+        ?>
 
         <p>What is the purpose of HTML in web development?</p>
         <textarea name="q4" id=""></textarea>
