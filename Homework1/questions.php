@@ -23,7 +23,8 @@
     
     shuffle($questions);
 
-    foreach ($questions as $randomOption) {
-        shuffle($randomOption);
+    foreach ($questions as &$question) { // Use & to modify the original array
+        shuffle($question["options"]);
     }
+    
 ?>
