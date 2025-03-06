@@ -40,4 +40,27 @@
         }
     }
 
+    $questions1 =[
+        [
+            'question' =>  'What is HTML',
+            'maxPoint' => '8' 
+        ],
+        [
+            'question' =>  'What is Angular',
+            'maxPoint' => '10' 
+        ],
+        [
+            'question' =>  'What is React',
+            'maxPoint' => '9' 
+        ],
+        [
+            'question' =>  'What is CSS',
+            'maxPoint' => '10' 
+        ],
+        [
+            'question' =>  'What is JS',
+            'maxPoint' => '10' 
+        ]
+    ]
+
 ?>
