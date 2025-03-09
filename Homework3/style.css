@@ -1,0 +1,25 @@
+table{
+    border-collapse: collapse;
+    margin: auto;
+    text-align: center;
+}
+
+table tr th, td{
+    padding: 5px;
+    border: 1px solid black;
+}
+
+form{
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+}
+
+form input{
+    margin: 5px;
+}
+
+p{
+    text-align: center;
+}
