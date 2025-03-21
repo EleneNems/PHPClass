@@ -1,0 +1,27 @@
+
+header, main{
+    border: solid 1px black;
+    width: 700px;
+    margin: auto;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+form input, button{
+    margin: 5px;
+}
+
+main table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+main table td, th{
+    border: solid 1px gray;
+    padding: 8px;
+}
+
+.error{
+    text-align: center;
+    color: red;
+}
