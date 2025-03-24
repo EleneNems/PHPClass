@@ -1,0 +1,44 @@
+.img_container{
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+    margin:10px auto;
+}
+
+input[type="file"]{
+    margin: 10px 0;
+}
+
+button{
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+p{
+    margin-top: 10px;
+    color: red;
+}
+
+.table-1 {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    border-radius: 10px;
+    border: 1px solid black;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.table-1 th, td {
+    padding: 12px;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 16px;
+}

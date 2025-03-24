@@ -46,4 +46,16 @@
     // echo "<pre>";
     // print_r($content);
     // echo "</pre>";
+
+
+    if (isset($_GET['drop'])) {
+        $deleting_item = $_GET['drop'];
+    
+        if (is_file($deleting_item)) {
+            unlink($deleting_item);
+        } elseif (is_dir($deleting_item)) {
+            rmdir($deleting_item);
+        }
+    }
+    
 ?>
