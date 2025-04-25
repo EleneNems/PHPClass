@@ -1,0 +1,64 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: antiquewhite;
+    margin: 0;
+    padding: 0;
+}
+
+header, main, footer{
+    width: 70%;
+    border: 1px solid black;
+    min-height: 50px;
+    margin: 10px auto;
+}
+
+header{
+    height: 80px;
+    background-color: bisque;
+}
+main{
+    min-height: 500px;
+    background-color: white;
+    display: flex;
+}
+
+nav{
+    width: 25%;
+    background-color: rgb(247, 229, 204);
+    padding: 10px;
+}
+
+.content{
+    width: 75%;
+    padding: 10px;
+}
+
+footer{
+    background-color: burlywood;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0; 
+}
+
+ul li a {
+    text-decoration: none;
+}
+
+.datatable{
+    border-collapse: collapse;
+    width: 400px;
+}
+
+.datatable th, td{
+    border: solid 1px gray;
+    padding: 7px;
+}
+
+form{
+    padding: 10px;
+}
