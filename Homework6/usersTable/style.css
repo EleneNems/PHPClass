@@ -1,0 +1,22 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+
+main{
+    width: 100%;
+    background-color: rgb(169, 212, 255);
+    min-height: 200px;
+    padding: 10px;
+}
+
+.table1{
+    border-collapse: collapse;
+    border: solid 1px black;
+    margin: auto;
+    width: 80%;
+}
+
+.table1 th, td{
+    border: solid 1px black;
+}

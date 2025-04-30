@@ -1,0 +1,23 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+main{
+    width: 100%;
+    background-color: lightpink;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+table{
+    border-collapse: collapse;
+    width: 80%;
+}
+
+table tr td, tr th{
+    border: solid 1px black;
+}
