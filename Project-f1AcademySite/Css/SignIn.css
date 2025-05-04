@@ -1,0 +1,109 @@
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  /* min-height: 100vh;  */
+}
+
+main {
+  flex: 1; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+  
+.signin-container{
+  margin: 150px 100px 100px 100px;
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+} 
+  
+h2{
+  margin-bottom: 30px;
+  font-size: 25px;
+  font-weight: bold;
+  color: #1d1d1b;
+}
+  
+form{
+  display: flex;
+  flex-direction: column;
+}
+  
+label{
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: #1d1d1b;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.password-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.password-wrapper input {
+  padding-right: 40px;
+}
+
+.toggle-password {
+  position: absolute;
+  z-index: 1;
+  top: 21px;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #999;
+  font-size: 18px;
+}
+  
+.extra-options a {
+  color: #c3047c;
+  font-size: 0.9em;
+  text-decoration: underline;
+}
+  
+.sign-in-btn {
+  background-color: #c3047c;
+  color: white;
+  font-weight: bold;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+  
+.sign-in-btn:hover {
+  background-color: #a10365;
+}
+  
+.register-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #1d1d1b;
+  font-size: 0.9em;
+}
+  
+.register-link a {
+  color: #c3047c;
+  text-decoration: underline;
+}
+  
