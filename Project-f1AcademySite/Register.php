@@ -11,8 +11,8 @@ include "includes/register.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F1 Academy-Register</title>
-    <link rel="stylesheet" href="Css/layout.css">
-    <link rel="stylesheet" href="Css/Register.css">
+    <link rel="stylesheet" href="Css/layout.css?v=3">
+    <link rel="stylesheet" href="Css/Register.css?v=2">
 </head>
 
 <body>
@@ -27,48 +27,48 @@ include "includes/register.php";
             <form method="post">
                 <h1>CREATE AN ACCOUNT</h1>
 
-                <?php if (!empty($field_errors['form'])){ 
-                ?>
+                <?php if (!empty($field_errors['form'])) {
+                    ?>
                     <p style="color: red;"><?= $field_errors['form'] ?></p>
-                <?php
-                } 
+                    <?php
+                }
                 ?>
 
                 <label for="username">Username *</label>
                 <input type="text" id="username" name="username" value="<?= $_POST['username'] ?? '' ?>"
-                    placeholder="Choose a username" required />
-                <?php if (!empty($field_errors['username'])){
-                ?>
+                    placeholder="Choose a username"/>
+                <?php if (!empty($field_errors['username'])) {
+                    ?>
                     <p style="color: red;"><?= $field_errors['username'] ?></p>
-                <?php 
+                <?php
                 }
                 ?>
 
                 <label for="dob">Date of birth *</label>
-                <input type="date" name="dob" id="dob" value="<?= $_POST['dob'] ?? '' ?>" required />
-                <?php if (!empty($field_errors['dob'])){ ?>
+                <input type="date" name="dob" id="dob" value="<?= $_POST['dob'] ?? '' ?>"/>
+                <?php if (!empty($field_errors['dob'])) { ?>
                     <p style="color: red;"><?= $field_errors['dob'] ?></p>
-                <?php 
+                <?php
                 }
                 ?>
 
                 <label for="email">Email address *</label>
                 <input type="email" id="email" name="email" value="<?= $_POST['email'] ?? '' ?>"
-                    placeholder="Email address" required />
-                <?php if (!empty($field_errors['email'])){?>
+                    placeholder="Email address"/>
+                <?php if (!empty($field_errors['email'])) { ?>
                     <p style="color: red;"><?= $field_errors['email'] ?></p>
-                <?php  
+                <?php
                 }
                 ?>
 
                 <label for="password">Password *</label>
                 <div class="password-wrapper">
-                    <input type="password" name="password" id="password" placeholder="**********" required />
+                    <input type="password" name="password" id="password" placeholder="**********"/>
                     <i class="fas fa-eye toggle-password"></i>
                 </div>
-                <?php if (!empty($field_errors['password'])){ ?>
+                <?php if (!empty($field_errors['password'])) { ?>
                     <p style="color: red;"><?= $field_errors['password'] ?></p>
-                <?php 
+                <?php
                 }
                 ?>
 
@@ -85,9 +85,9 @@ include "includes/register.php";
                         <input type="checkbox" id="consent" name="consent" <?= isset($_POST['consent']) ? 'checked' : '' ?> />
                         I agree with F1 Academy's <a href="#">Privacy Policy</a>.
                     </label>
-                    <?php if (!empty($field_errors['consent'])){?>
+                    <?php if (!empty($field_errors['consent'])) { ?>
                         <p style="color: red;"><?= $field_errors['consent'] ?></p>
-                    <?php 
+                    <?php
                     }
                     ?>
                 </div>

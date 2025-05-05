@@ -1,10 +1,10 @@
-.page-wrapper {
+.page-wrapper{
     display: flex;
     flex-direction: column;
     /* min-height: 100vh;  */
 }
 
-main {
+main{
     flex: 1; 
     display: flex;
     justify-content: center;
@@ -12,47 +12,50 @@ main {
     padding: 40px;
 }
 
-form {
-    margin-top: 100px;
-    background: white;
-    border-radius: 8px;
-    padding: 30px;
-    max-width: 500px;
+form{
+    margin: 100px auto;
     width: 100%;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
+    max-width: 500px;
+    background-color: #1a1a1a;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #6b2a4a; 
+    backdrop-filter: blur(10px);
+} 
 
-h1 {
+h1{
+    color: white;
     font-weight: 700;
     font-size: 28px;
     margin-bottom: 20px;
 }
 
-label {
+label{
+    color: white;
     font-weight: 600;
     display: block;
     margin: 15px 0 5px;
 }
 
-input, select {
+input{
     width: 100%;
     padding: 12px;
     border-radius: 6px;
-    border: 1px solid #ccc;
+    border: 1.5px solid #6b2a4a;
     font-size: 16px;
     box-sizing: border-box;
 }
 
-.password-wrapper {
+.password-wrapper{
     position: relative;
     z-index: 1;
 }
 
-.password-wrapper input {
+.password-wrapper input{
     padding-right: 40px;
 }
 
-.toggle-password {
+.toggle-password{
     position: absolute;
     right: 12px;
     top: 50%;
@@ -61,42 +64,42 @@ input, select {
     cursor: pointer;
 }
 
-ul {
+ul{
     margin-top: 10px;
     padding-left: 20px;
     font-size: 14px;
 }
 
-ul li {
-    color: #666;
+ul li{
+    color: #a0a0a0;
     margin-bottom: 5px;
 }
 
-.checkbox-wrapper {
+.checkbox-wrapper{
     display: block;
     margin-top: 20px;
 }
 
-.checkbox-wrapper input {
+.checkbox-wrapper input{
     margin-right: 10px;
     width: 20px;
 }
 
-.checkbox-wrapper label {
+.checkbox-wrapper label{
     display: flex;
     font-size: 14px;
     min-width: 450px;
     line-height: 1.4;
 }
 
-.checkbox-wrapper a {
+.checkbox-wrapper a{
     color: #c3047c;
     margin-left: 3px;
     text-decoration: underline;
     text-underline-offset: 3px;
 }
 
-.submit-btn {
+.submit-btn{
     margin-top: 25px;
     background-color: #c3047c;
     border: none;

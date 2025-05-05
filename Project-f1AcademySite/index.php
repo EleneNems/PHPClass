@@ -10,7 +10,9 @@ include "includes/layout.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F1 Academy</title>
-    <link rel="stylesheet" href="Css/layout.css">
+    <link rel="stylesheet" href="Css/layout.css?v=3">
+    <link rel="stylesheet" href="Css/HomePage.css?v=2">
+
 </head>
 
 <body>
@@ -36,7 +38,70 @@ include "includes/layout.php";
 
     </header>
 
-    <main></main>
+    <main>
+        <div class="home-section">
+            <img src="Assets/HomePic.png" alt="F1 academy picture" class="home-bg">
+            <div class="home-content">
+                <h1>FINDING THE NEXT GENERATION OF TALENT ON AND OFF TRACK</h1>
+                <p>
+                    F1 Academy is here to champion the next generation of female talent to explore their own motorsport
+                    journeys.
+                    By breaking down barriers to entry on track in the F1 Academy Racing Series and through grassroots
+                    initiatives
+                    such as F1 Academy Discover Your Drive, we hope to make motorsport more diverse, inclusive and
+                    accessible.
+                </p>
+            </div>
+        </div>
+
+        <section class="news-section">
+
+            <div class="news_btn">
+                <h2 class="news-title">News</h2>
+                <div class="buttons">
+                    <button class="slider-btn" id="btn-left">←</button>
+                    <button class="slider-btn" id="btn-right">→</button>
+
+                </div>
+            </div>
+
+            <div class="news-slider">
+                <div class="news-cards-wrapper" id="news-container">
+                    <?php
+                    $query = "SELECT title, description, photo_path, date FROM news ORDER BY date DESC";
+                    $result = mysqli_query($conn, $query);
+
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+
+                            $day = date("d", strtotime($row['date']));
+                            $month = strtoupper(string: date("M", strtotime($row['date'])));
+                            $title = htmlspecialchars($row['title']);
+                            $desc = htmlspecialchars($row['description']);
+                            $imgPath = htmlspecialchars($row['photo_path']);
+                            ?>
+
+                            <div class="news-card">
+                                <div class="news-image"
+                                    style="background-image: url('<?php echo $imgPath; ?>'); background-size: cover; background-position: center;">
+                                    <div class="news-date">
+                                        <span class="day"><?php echo $day; ?></span>
+                                        <span class="month"><?php echo $month; ?></span>
+                                    </div>
+                                </div>
+                                <div class="news-info">
+                                    <h3 class="news-card-title"><?php echo $title; ?></h3>
+                                    <p class="news-description"><?php echo $desc; ?></p>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+        </section>
+    </main>
 
 
     <footer>
@@ -103,6 +168,7 @@ include "includes/layout.php";
         </div>
     </footer>
 
+    <script src="JS/Slider.js"></script>
 </body>
 
 </html>

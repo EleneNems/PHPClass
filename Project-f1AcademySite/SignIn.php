@@ -11,8 +11,8 @@ include "includes/auth.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F1 Academy-Sign In</title>
-    <link rel="stylesheet" href="Css/layout.css">
-    <link rel="stylesheet" href="Css/SignIn.css">
+    <link rel="stylesheet" href="Css/layout.css?v=3">
+    <link rel="stylesheet" href="Css/SignIn.css?v=2">
 </head>
 
 <body>
@@ -39,11 +39,11 @@ include "includes/auth.php";
 
                 <form method="post" action="">
                     <label for="email">Email address</label>
-                    <input type="email" name="email" id="email" placeholder="you@example.com" required />
+                    <input type="email" name="email" id="email" placeholder="you@example.com"/>
 
                     <label for="password">Password</label>
                     <div class="password-wrapper">
-                        <input type="password" name="password" id="password" placeholder="••••••••••••••" required />
+                        <input type="password" name="password" id="password" placeholder="••••••••••••••"/>
                         <i class="fas fa-eye toggle-password"></i>
                     </div>
 
