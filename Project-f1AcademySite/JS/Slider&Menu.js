@@ -15,3 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
         wrapper.scrollBy({ left: scrollAmount, behavior: "smooth" });
     });
 });
+
+function toggleMenu() {
+    const menu = document.querySelector('.list');
+    menu.classList.toggle('active');
+}

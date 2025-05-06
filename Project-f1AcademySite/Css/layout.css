@@ -33,8 +33,8 @@ body {
 header {
     background: linear-gradient(
       180deg,
-      rgba(195, 4, 124, 1) 0%,
-      rgba(195, 4, 124, 0.8) 80%,
+      rgba(195, 4, 124, 1) 40%,
+      rgba(195, 4, 124, 0.8) 100%,
       rgba(195, 4, 124, 0.6) 100%
     );
     top: 0;
@@ -249,4 +249,51 @@ hr{
 
 p{
     color: white;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+}
+
+.menu-toggle .bar {
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    border-radius: 2px;
+}
+
+@media screen and (max-width: 1200px) {
+    .list {
+        display: none;
+        width: 100%;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        background-color: rgba(195, 4, 124, 1);
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .list.active {
+        display: block;
+    }
+
+    .list ul {
+        flex-direction: row;
+        margin: auto;
+        gap: 20px;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .sign_in {
+        display: none;
+    }
 }

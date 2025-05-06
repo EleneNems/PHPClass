@@ -4,13 +4,15 @@ include 'connect.php';
 $field_errors = [];
 
 if (isset($_POST['register'])) {
-    $username = trim($_POST['username']);
+    $firstname = trim($_POST['firstname']);
+    $lastname = trim($_POST['lastname']);
     $dob = trim($_POST['dob']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $consent = isset($_POST['consent']) ? 1 : 0;
 
-    if (empty($username)) $field_errors['username'] = "Username is required.";
+    if (empty($firstname)) $field_errors['firstname'] = "Firstname is required.";
+    if (empty($lastname)) $field_errors['lastname'] = "Lastname is required.";
     if (empty($dob)) $field_errors['dob'] = "Date of birth is required.";
     if (empty($email)) $field_errors['email'] = "Email is required.";
     if (empty($password)) $field_errors['password'] = "Password is required.";
@@ -45,11 +47,12 @@ if (isset($_POST['register'])) {
 
     if (empty($field_errors)) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $safe_username = mysqli_real_escape_string($conn, $username);
+        $safe_firstname = mysqli_real_escape_string($conn, $firstname);
+        $safe_lastname = mysqli_real_escape_string($conn, $lastname);
         $safe_dob = mysqli_real_escape_string($conn, $dob);
 
-        $query = "INSERT INTO users (username, date_of_birth, email, password)
-                  VALUES ('$safe_username', '$safe_dob', '$safe_email', '$hashed_password')";
+        $query = "INSERT INTO users (firstname, lastname, date_of_birth, email, password)
+                  VALUES ('$safe_firstname', '$safe_lastname', '$safe_dob', '$safe_email', '$hashed_password')";
 
         if (mysqli_query($conn, $query)) {
             header("Location: SignIn.php?registered=1");
