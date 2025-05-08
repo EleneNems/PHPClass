@@ -11,8 +11,7 @@ include "includes/layout.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F1 Academy</title>
     <link rel="stylesheet" href="Css/layout.css?v=5">
-    <link rel="stylesheet" href="Css/HomePage.css?v=6">
-
+    <link rel="stylesheet" href="Css/HomePage.css?v=8">
 </head>
 
 <body>
@@ -26,7 +25,7 @@ include "includes/layout.php";
                 <li><a href="">Teams</a></li>
                 <li><a href="">Drivers</a></li>
                 <li><a href="">Results</a></li>
-                <li><a href="">Schedule</a></li>
+                <li><a href="schedule.php">Schedule</a></li>
             </ul>
         </div>
 
@@ -41,7 +40,6 @@ include "includes/layout.php";
             <div class="bar"></div>
             <div class="bar"></div>
         </div>
-
     </header>
 
     <main>
@@ -72,31 +70,33 @@ include "includes/layout.php";
             <div class="news-slider">
                 <div class="news-cards-wrapper" id="news-container">
                     <?php
-                    $query = "SELECT title, description, photo_path, date FROM news ORDER BY date DESC";
+                    $query = "SELECT id, title, description, photo_path, date FROM news ORDER BY date DESC";
                     $result = mysqli_query($conn, $query);
 
                     if ($result && mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
-
                             $day = date("d", strtotime($row['date']));
-                            $month = strtoupper(string: date("M", strtotime($row['date'])));
+                            $month = strtoupper(date("M", strtotime($row['date'])));
+                            $newsId = $row['id'];
                             ?>
-
-                            <div class="news-card">
-                                <div class="news-image"
-                                    style="background-image: url('<?= $row['photo_path'] ?>'); background-size: cover; background-position: center;">
-                                    <div class="news-date">
-                                        <span class="day"><?= $day ?></span>
-                                        <span class="month"><?= $month ?></span>
+                            
+                            <a href="news.php?id=<?= $newsId ?>" class="news-card-link">
+                                <div class="news-card">
+                                    <div class="news-image"
+                                        style="background-image: url('<?= $row['photo_path'] ?>'); background-size: cover; background-position: center;">
+                                        <div class="news-date">
+                                            <span class="day"><?= $day ?></span>
+                                            <span class="month"><?= $month ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="news-info">
+                                        <h3 class="news-card-title"><?= $row['title'] ?></h3>
+                                        <p class="news-description"><?= $row['description'] ?></p>
                                     </div>
                                 </div>
-                                <div class="news-info">
-                                    <h3 class="news-card-title"><?= $row['title'] ?></h3>
-                                    <p class="news-description"><?= $row['description'] ?></p>
-                                </div>
-                            </div>
-                            <?php
-                        }
+                            </a>
+                        <?php
+                        }                    
                     }
                     ?>
                 </div>
@@ -108,15 +108,14 @@ include "includes/layout.php";
 
             <div class="stories-inner">
                 <?php
-
-                $mainQuery = "SELECT s.title, s.story_pic_path, s.type, u.firstname, u.lastname FROM stories s JOIN users u ON s.author_id = u.id WHERE s.type IN ('main-story') ORDER BY s.created_at DESC LIMIT 1";
+                $mainQuery = "SELECT s.id, s.title, s.story_pic_path, s.type, u.firstname, u.lastname FROM stories s JOIN users u ON s.author_id = u.id WHERE s.type IN ('main-story') ORDER BY s.created_at DESC LIMIT 1";
                 $mainResult = mysqli_query($conn, $mainQuery);
 
                 if ($mainResult && mysqli_num_rows($mainResult) > 0) {
                     $mainStory = mysqli_fetch_assoc($mainResult);
                     $fullname = $mainStory['firstname'] . ' ' . $mainStory['lastname'];
                     ?>
-                    <div class="main-story-container">
+                    <a href="story.php?id=<?= $mainStory['id'] ?>" class="main-story-container">
                         <div class="scrollable-content">
                             <div class="story-image"
                                 style="background-image: url('<?= $mainStory['story_pic_path'] ?>'); background-size: cover; background-position: center;">
@@ -127,14 +126,18 @@ include "includes/layout.php";
                                 <p class="story-desc">by: <?= $fullname ?></p>
                             </div>
                         </div>
-                    </div>
+                    </a>
                     <?php
                 }
                 ?>
 
                 <div class="story-list">
                     <?php
-                    $otherQuery = "SELECT s.title, s.story_pic_path, s.type, u.firstname, u.lastname FROM stories s JOIN users u ON s.author_id = u.id WHERE s.type IN ('Story', 'Interview', 'report') ORDER BY s.created_at DESC LIMIT 6";
+                    $otherQuery = "SELECT s.id, s.title, s.story_pic_path, s.type, u.firstname, u.lastname 
+                           FROM stories s 
+                           JOIN users u ON s.author_id = u.id 
+                           WHERE s.type IN ('Story', 'Interview', 'report') 
+                           ORDER BY s.created_at DESC LIMIT 6";
 
                     $otherResult = mysqli_query($conn, $otherQuery);
 
@@ -142,7 +145,7 @@ include "includes/layout.php";
                         while ($story = mysqli_fetch_assoc($otherResult)) {
                             $fullname = $story['firstname'] . ' ' . $story['lastname'];
                             ?>
-                            <div class="story-card">
+                            <a href="story.php?id=<?= $story['id'] ?>" class="story-card">
                                 <div class="story-image"
                                     style="background-image: url('<?= $story['story_pic_path'] ?>'); background-size: cover; background-position: center;">
                                 </div>
@@ -151,7 +154,7 @@ include "includes/layout.php";
                                     <h3 class="story-title"><?= $story['title'] ?></h3>
                                     <p class="story-desc">by: <?= $fullname ?></p>
                                 </div>
-                            </div>
+                            </a>
                             <?php
                         }
                     }
@@ -230,5 +233,4 @@ include "includes/layout.php";
 
     <script src="JS/Slider&Menu.js"></script>
 </body>
-
 </html>
