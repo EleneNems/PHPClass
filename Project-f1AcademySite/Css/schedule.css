@@ -22,9 +22,10 @@
 
 .calendar-grid{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, 1fr); 
     gap: 40px;
     justify-items: center;
+    align-items: center;
 }
 
 .calendar-card{
@@ -85,7 +86,7 @@
 }
 
 .driver-box{
-    width: 48%;
+    width: 50%;
     text-align: center;
     position: relative; 
 }
@@ -96,6 +97,16 @@
     background-color: #ccc;
     border-radius: 10px 10px 0 0;
     margin-bottom: 5px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+.driver-photo img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
 }
 
 .driver-name{
@@ -119,4 +130,16 @@
 .driver-name span{
     color: #c8007a;
     font-size: 10px;
+}
+
+.calendar-card{
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.calendar-card:hover{
+    cursor: pointer;
+    transform: scale(1.01);
+    transition: transform 0.2s;
 }

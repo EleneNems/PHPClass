@@ -2,19 +2,58 @@
 include "includes/connect.php";
 include "includes/layout.php";
 
-$newsId = intval($_GET['id']);
-
-$query = "SELECT title, description, content, photo_path, date FROM news WHERE id = $newsId";
-$result = mysqli_query($conn, $query);
-$news = mysqli_fetch_assoc($result);
-
-$imgQuery = "SELECT image_path, caption FROM news_photos WHERE news_id = $newsId";
-$imgResult = mysqli_query($conn, $imgQuery);
-
-$images = [];
-while ($img = mysqli_fetch_assoc($imgResult)) {
-    $images[] = $img;
+$racesResult = mysqli_query($conn, "SELECT id, name FROM race_events ORDER BY start_date");
+$races = array();
+while ($row = mysqli_fetch_assoc($racesResult)) {
+    $races[] = $row;
 }
+
+$driversResult = mysqli_query($conn, "SELECT id, firstname, lastname, racing_number, team_id FROM drivers");
+$drivers = array();
+while ($row = mysqli_fetch_assoc($driversResult)) {
+    $id = $row['id'];
+    $firstInitial = strtoupper(substr($row['firstname'], 0, 1));
+    $nameDisplay = "<span class='number'>". $row['racing_number']."</span>" . " - " . $firstInitial . ". " . $row['lastname'];
+    $drivers[$id] = array(
+        'display' => $nameDisplay,
+        'total_points' => 0,
+        'per_race' => array()
+    );
+}
+
+$sessionsResult = mysqli_query($conn, "SELECT event_id, session_number, type, result_json FROM sessions WHERE type = 'Race'");
+while ($row = mysqli_fetch_assoc($sessionsResult)) {
+    $results = json_decode($row['result_json'], true);
+    if (!$results)
+        continue;
+
+    foreach ($results as $entry) {
+        $driverId = $entry['driver_id'];
+        $points = isset($entry['points']) ? $entry['points'] : 0;
+
+        if (!isset($drivers[$driverId]))
+            continue;
+
+        $drivers[$driverId]['total_points'] += $points;
+
+        $raceId = $row['event_id'];
+        $sessionKey = 'R' . $row['session_number'];
+
+        if (!isset($drivers[$driverId]['per_race'][$raceId])) {
+            $drivers[$driverId]['per_race'][$raceId] = array();
+        }
+
+        if (!isset($drivers[$driverId]['per_race'][$raceId][$sessionKey])) {
+            $drivers[$driverId]['per_race'][$raceId][$sessionKey] = 0;
+        }
+
+        $drivers[$driverId]['per_race'][$raceId][$sessionKey] += $points;
+    }
+}
+
+usort($drivers, function ($a, $b) {
+    return $b['total_points'] - $a['total_points'];
+});
 ?>
 
 <!DOCTYPE html>
@@ -23,9 +62,9 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $news['title'] ?></title>
-    <link rel="stylesheet" href="Css/layout.css">
-    <link rel="stylesheet" href="Css/story-news.css?v=1">
+    <title>F1 Academy - Driver Standings</title>
+    <link rel="stylesheet" href="Css/layout.css?v=1">
+    <link rel="stylesheet" href="Css/standings.css?v=1">
 </head>
 
 <body>
@@ -54,47 +93,55 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
     </header>
 
     <main>
-        <div class="story-page">
-
-            <h1><?= $news['title'] ?></h1>
-
-            <?php
-            $date = new DateTime($news['date']);
-            $formattedDate = $date->format('F j, Y');
-            ?>
-            <p class="news-date"><?= $formattedDate ?></p>
-
-            <img src="<?= $news['photo_path'] ?>" alt="Main News Image">
-
-            <div class="story-content">
-                <?php
-                $content = $news['content'];
-                $rawParagraphs = preg_split('/\r\n|\r|\n/', $content);
-                $paragraphs = array_filter(array_map('trim', $rawParagraphs));
-                $imgIndex = 0;
-                $realParaCount = 0;
-
-                foreach ($paragraphs as $para) {
-                    echo "<p>" . $para . "</p>";
-                    $realParaCount++;
-
-                    if ($realParaCount % 4 === 0 && isset($images[$imgIndex])) {
-                        $imagePath = $images[$imgIndex]['image_path'];
-                        $caption = $images[$imgIndex]['caption'];
-                        echo "
-            <div class='inline-photo'>
-                <img src='$imagePath' alt='News image'>
-                <p class='photo-caption'>$caption</p>
+        <div class="standings-container">
+            <h1>F1 Academy Standings</h1>
+            <hr>
+            <div class="tabs">
+                <a href="standings_team.php" class="tab-link">
+                    <div class="tab">Teams</div>
+                </a>
+                <a href="standings_drivers.php" class="tab-link">
+                    <div class="tab active">Drivers</div>
+                </a>
             </div>
-            ";
-                        $imgIndex++;
-                    }
-                }
-                ?>
-            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th class="blank"></th>
+                        <th class="blank"></th>
+                        <?php foreach ($races as $race) { ?>
+                            <th class="blank" colspan="2"><?= $race['name'] ?></th>
+                        <?php } ?>
+                    </tr>
+                    <tr>
+                        <th>Driver</th>
+                        <th>T. Points</th>
+                        <?php foreach ($races as $race) { ?>
+                            <th>R1</th>
+                            <th>R2</th>
+                        <?php } ?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($drivers as $driver) { ?>
+                        <tr>
+                            <td class="format"><?= $driver['display'] ?></td>
+                            <td><?= $driver['total_points'] ?></td>
+                            <?php foreach ($races as $race) {
+                                $racePoints = isset($driver['per_race'][$race['id']]) ? $driver['per_race'][$race['id']] : array();
+                                $r1 = isset($racePoints['R1']) ? $racePoints['R1'] : '-';
+                                $r2 = isset($racePoints['R2']) ? $racePoints['R2'] : '-';
+                                ?>
+                                <td><?= $r1 ?></td>
+                                <td><?= $r2 ?></td>
+                            <?php } ?>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
         </div>
     </main>
-
 
     <footer>
         <div class="footer_list">
@@ -161,6 +208,7 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
             <p>© 2025 F1 Academy Limited</p>
         </div>
     </footer>
+
     <script src="JS/Slider&Menu.js"></script>
 </body>
 

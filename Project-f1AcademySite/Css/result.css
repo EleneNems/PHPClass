@@ -1,0 +1,160 @@
+.cover-section{
+    position: relative;
+    width: 100%;
+    height: 600px; 
+    overflow: hidden;
+}
+
+.result-bg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+}
+
+.result-content{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    text-align: center;
+}
+
+.results-container{
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.session-container{
+    margin-bottom: 20px;
+}
+.session-header{
+    background-color: #c6007e;
+    padding: 15px 20px;
+    font-size: 25px;
+    color: white;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.session-content{
+    background-color: #1a1a1a;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s;
+    padding: 0 20px;
+    border-radius: 0 0 6px 6px;
+}
+
+.session-content.open{
+    max-height: 1000px;
+    padding: 20px;
+}
+
+.table_container{
+    width: 1150px;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+.result-table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.session-results th,
+.session-results td{
+    border: 2px solid #c6007e;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+.result-table th{
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.driver-info{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.driver-info span{
+    color: #c6007e;
+}
+
+.session-box{
+    margin-bottom: 20px;
+}
+
+.session-box.open{
+    margin-bottom: 0;
+}
+
+.session-results{
+    display: none;
+    margin-top: -10px;
+    padding: 0;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.session-results.open{
+    display: block;
+    padding-top: 0;
+}
+
+.container_race{
+    display: flex;
+    width: 1000px;
+    background-color: #1a1a1a;
+    padding: 20px;
+    margin:  20px auto;
+    border-radius: 10px;
+    gap: 40px;
+    align-items: center;
+    color: white;
+}
+
+.race-left img{
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+.race-right{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.race-name{
+    color: #c6007e;
+    font-size: 28px;
+    margin: 0;
+}
+
+.race-location{
+    color: #c6007e;
+    font-size: 20px;
+    margin: 0;
+}
+
+.race-date{
+    font-size: 18px;
+    margin: 0;
+}

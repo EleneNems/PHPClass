@@ -2,19 +2,8 @@
 include "includes/connect.php";
 include "includes/layout.php";
 
-$newsId = intval($_GET['id']);
-
-$query = "SELECT title, description, content, photo_path, date FROM news WHERE id = $newsId";
-$result = mysqli_query($conn, $query);
-$news = mysqli_fetch_assoc($result);
-
-$imgQuery = "SELECT image_path, caption FROM news_photos WHERE news_id = $newsId";
-$imgResult = mysqli_query($conn, $imgQuery);
-
-$images = [];
-while ($img = mysqli_fetch_assoc($imgResult)) {
-    $images[] = $img;
-}
+$teamsQuery = "SELECT * FROM teams";
+$teamsResult = mysqli_query($conn, $teamsQuery);
 ?>
 
 <!DOCTYPE html>
@@ -23,9 +12,9 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $news['title'] ?></title>
-    <link rel="stylesheet" href="Css/layout.css">
-    <link rel="stylesheet" href="Css/story-news.css?v=1">
+    <title>F1 Academy-Teams</title>
+    <link rel="stylesheet" href="Css/layout.css?v=1">
+    <link rel="stylesheet" href="Css/teams.css?v=1">
 </head>
 
 <body>
@@ -54,45 +43,46 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
     </header>
 
     <main>
-        <div class="story-page">
 
-            <h1><?= $news['title'] ?></h1>
-
-            <?php
-            $date = new DateTime($news['date']);
-            $formattedDate = $date->format('F j, Y');
-            ?>
-            <p class="news-date"><?= $formattedDate ?></p>
-
-            <img src="<?= $news['photo_path'] ?>" alt="Main News Image">
-
-            <div class="story-content">
-                <?php
-                $content = $news['content'];
-                $rawParagraphs = preg_split('/\r\n|\r|\n/', $content);
-                $paragraphs = array_filter(array_map('trim', $rawParagraphs));
-                $imgIndex = 0;
-                $realParaCount = 0;
-
-                foreach ($paragraphs as $para) {
-                    echo "<p>" . $para . "</p>";
-                    $realParaCount++;
-
-                    if ($realParaCount % 4 === 0 && isset($images[$imgIndex])) {
-                        $imagePath = $images[$imgIndex]['image_path'];
-                        $caption = $images[$imgIndex]['caption'];
-                        echo "
-            <div class='inline-photo'>
-                <img src='$imagePath' alt='News image'>
-                <p class='photo-caption'>$caption</p>
-            </div>
-            ";
-                        $imgIndex++;
-                    }
-                }
-                ?>
-            </div>
+        <div class="text">
+            <h2>F1 Academy Teams</h2>
+            <hr>
         </div>
+
+        <div class="teams-container">
+            <?php while ($team = mysqli_fetch_assoc($teamsResult)) { ?>
+                <div class="team-card">
+                    <div class="team-logo">
+                        <img src="<?= $team['logo'] ?>" alt="Team Logo">
+                    </div>
+
+                    <div class="team-name"><?= $team['name'] ?></div>
+
+                    <?php
+                    $teamId = $team['id'];
+                    $driversQuery = "SELECT * FROM drivers WHERE team_id = $teamId";
+                    $driversResult = mysqli_query($conn, $driversQuery);
+                    ?>
+
+                    <?php while ($driver = mysqli_fetch_assoc($driversResult)){ ?>
+                        <div class="driver-card">
+                            <div class="driver-pic">
+                                <img src="<?= $driver['cover_pic_path'] ?>" alt="Driver Image">
+                            </div>
+                            <div class="driver-info">
+                                <span>#<?= $driver['racing_number'] ?></span>
+                                <?= $driver['firstname'] . " " .$driver['lastname'] ?>
+                            </div>
+                        </div>
+                    <?php
+                    } 
+                    ?>
+                </div>
+            <?php
+            } 
+            ?>
+        </div>
+
     </main>
 
 
@@ -161,6 +151,7 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
             <p>© 2025 F1 Academy Limited</p>
         </div>
     </footer>
+
     <script src="JS/Slider&Menu.js"></script>
 </body>
 

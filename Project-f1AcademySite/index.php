@@ -22,9 +22,9 @@ include "includes/layout.php";
 
         <div class="list">
             <ul>
-                <li><a href="">Teams</a></li>
-                <li><a href="">Drivers</a></li>
-                <li><a href="">Results</a></li>
+                <li><a href="teams.php">Teams</a></li>
+                <li><a href="drivers.php">Drivers</a></li>
+                <li><a href="standings_team.php">Standings</a></li>
                 <li><a href="schedule.php">Schedule</a></li>
             </ul>
         </div>

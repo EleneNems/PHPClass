@@ -35,22 +35,19 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
         <a href="index.php">
             <img src="Assets/Layout/F1AcademyLogo.svg" alt="A F1 academy logo" class="academy_logo">
         </a>
-
         <div class="list">
             <ul>
-                <li><a href="">Teams</a></li>
-                <li><a href="">Drivers</a></li>
-                <li><a href="">Results</a></li>
-                <li><a href="">Schedule</a></li>
+                <li><a href="teams.php">Teams</a></li>
+                <li><a href="drivers.php">Drivers</a></li>
+                <li><a href="standings_team.php">Standings</a></li>
+                <li><a href="schedule.php">Schedule</a></li>
             </ul>
         </div>
-
         <a href="SignIn.php">
             <div class="sign_in">
                 <i class="fas fa-user"></i> Sign In
             </div>
         </a>
-
         <div class="menu-toggle" onclick="toggleMenu()">
             <div class="bar"></div>
             <div class="bar"></div>

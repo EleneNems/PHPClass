@@ -11,7 +11,7 @@ include "includes/layout.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F1 Academy-Schedule</title>
     <link rel="stylesheet" href="Css/layout.css?v=1">
-    <link rel="stylesheet" href="Css/schedule.css?v=1">
+    <link rel="stylesheet" href="Css/schedule.css?v=3">
 </head>
 
 <body>
@@ -19,22 +19,19 @@ include "includes/layout.php";
         <a href="index.php">
             <img src="Assets/Layout/F1AcademyLogo.svg" alt="A F1 academy logo" class="academy_logo">
         </a>
-
         <div class="list">
             <ul>
-                <li><a href="">Teams</a></li>
-                <li><a href="">Drivers</a></li>
-                <li><a href="">Results</a></li>
-                <li><a href="">Schedule</a></li>
+                <li><a href="teams.php">Teams</a></li>
+                <li><a href="drivers.php">Drivers</a></li>
+                <li><a href="standings_team.php">Standings</a></li>
+                <li><a href="schedule.php">Schedule</a></li>
             </ul>
         </div>
-
         <a href="SignIn.php">
             <div class="sign_in">
                 <i class="fas fa-user"></i> Sign In
             </div>
         </a>
-
         <div class="menu-toggle" onclick="toggleMenu()">
             <div class="bar"></div>
             <div class="bar"></div>
@@ -47,32 +44,85 @@ include "includes/layout.php";
         <hr class="calendar-line">
 
         <div class="calendar-grid">
-            <div class="calendar-card">
-                <span class="round-badge">Round 1</span>
-                <p class="date">21–23 March</p>
-                <hr class="white-line">
-                <h2 class="race-name">Race name</h2>
-                <p class="results-label">Results</p>
-                <div class="drivers-grid">
-                    <div class="driver-box">
-                        <div class="driver-photo"></div>
-                        <p class="driver-name">
-                            <span>R1</span>
-                            F. Lastname
-                        </p>
-                    </div>
-                    <div class="driver-box">
-                        <div class="driver-photo"></div>
-                        <p class="driver-name">
-                            <span>R2</span>
-                            F. Lastname
-                        </p>
-                    </div>
+            <?php
+            $races_query = "SELECT id, name, start_date, end_date FROM race_events ORDER BY start_date";
+            $races_result = mysqli_query($conn, $races_query);
+
+            while ($race = mysqli_fetch_assoc($races_result)) {
+                $raceId = $race['id'];
+
+                $sessions_query = "SELECT session_number, result_json FROM sessions WHERE event_id = $raceId AND type = 'Race' ORDER BY session_number";
+                $sessions_result = mysqli_query($conn, $sessions_query);
+
+                $winners = [];
+
+                while ($session = mysqli_fetch_assoc($sessions_result)) {
+                    $results = json_decode($session['result_json'], true);
+                    $winnerId = null;
+
+                    foreach ($results as $entry) {
+                        if ($entry['position'] === 1) {
+                            $winnerId = $entry['driver_id'];
+                            break;
+                        }
+                    }
+
+                    if ($winnerId) {
+                        $driver_query = "SELECT CONCAT(firstname, ' ', lastname) AS name, cover_pic_path FROM drivers WHERE id = $winnerId";
+                        $driver_result = mysqli_query($conn, $driver_query);
+                        $driver = mysqli_fetch_assoc($driver_result);
+
+                        $winners["R" . $session['session_number']] = [
+                            'name' => $driver['name'],
+                            'cover_pic' => $driver['cover_pic_path']
+                        ];
+                    }
+                }
+
+                echo "
+            <a href='results.php?race_id=$raceId' class='calendar-card'>
+                <span class='round-badge'>Round {$race['id']}</span>
+                <p class='date'>" . date("d–d M", strtotime($race['start_date'])) . "</p>
+                <hr class='white-line'>
+                <h2 class='race-name'>{$race['name']}</h2>
+                <p class='results-label'>Results</p>
+                <div class='drivers-grid'>";
+
+                if (isset($winners['R1'])) {
+                    echo "
+                <div class='driver-box'>
+                    <div class='driver-photo' style='background-image: url(\"{$winners['R1']['cover_pic']}\")'></div>
+                    <p class='driver-name'><span>R1</span>{$winners['R1']['name']}</p>
+                </div>";
+                } else {
+                    echo "
+                <div class='driver-box'>
+                    <div class='driver-photo' style='background-image: url(\"Assets/Drivers/TBD.webp\")'></div>
+                    <p class='driver-name'><span>R1</span>TBD</p>
+                </div>";
+                }
+
+                if (isset($winners['R2'])) {
+                    echo "
+                <div class='driver-box'>
+                    <div class='driver-photo' style='background-image: url(\"{$winners['R2']['cover_pic']}\")'></div>
+                    <p class='driver-name'><span>R2</span>{$winners['R2']['name']}</p>
+                </div>";
+                } else {
+                    echo "
+                <div class='driver-box'>
+                    <div class='driver-photo' style='background-image: url(\"Assets/Drivers/TBD.webp\")'></div>
+                    <p class='driver-name'><span>R2</span>TBD</p>
+                </div>";
+                }
+
+                echo "
                 </div>
-            </div>
+            </a>";
+            }
+            ?>
         </div>
     </main>
-
 
     <footer>
         <div class="footer_list">
