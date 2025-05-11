@@ -100,6 +100,9 @@
 
 .comment-text {
     margin-left: 0.5rem;
+    margin: 0;
+    flex: 1;
+    padding-right: 10px;
 }
 
 .news-date{
@@ -108,4 +111,107 @@
     opacity: 80%;
     margin-top: -10px;
     margin-bottom: 1rem;
+}
+
+.comment-form{
+    margin-bottom: 20px;
+}
+
+.textarea-wrapper{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.textarea-wrapper textarea{
+    flex: 1;
+    height: 50px;
+    resize: none;
+    font-size: 14px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.textarea-wrapper button{
+    padding: 8px 16px;
+    font-weight: bold;
+    background-color: #e6007e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 50px; 
+}
+
+.textarea-wrapper button:hover{
+    background-color: #cc006a;
+}
+
+.comment-actions{
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+    justify-content: flex-end;
+}
+
+.inline-form{
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.edited-label{
+    font-size: 0.8em;
+    color: #888;
+    margin-left: 5px;
+}
+
+.comment-actions button{
+    margin-right: 10px;
+}
+
+.edit-form textarea{
+    width: 100%;
+    height: 60px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-family: inherit;
+    font-size: 1em;
+}
+
+.comment-actions button,
+.edit-form button{
+    padding: 6px 12px;
+    background-color: #e6007e;
+    color: white;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.comment-actions button:hover,
+.edit-form button:hover{
+    background-color: #cc006a;
+}
+
+.edit-form button[type="button"]{
+    background-color: #666;
+}
+
+.edit-form button[type="button"]:hover{
+    background-color: #444;
+}
+
+.edit-form{
+    margin-top: 10px;
+}
+
+.comment-body{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

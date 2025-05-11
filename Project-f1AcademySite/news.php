@@ -1,6 +1,7 @@
 <?php
 include "includes/connect.php";
 include "includes/layout.php";
+include "includes/user_profile_box.php";
 
 $newsId = intval($_GET['id']);
 
@@ -24,7 +25,7 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $news['title'] ?></title>
-    <link rel="stylesheet" href="Css/layout.css">
+    <link rel="stylesheet" href="Css/layout.css?v=2">
     <link rel="stylesheet" href="Css/story-news.css?v=1">
 </head>
 
@@ -41,11 +42,23 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
                 <li><a href="schedule.php">Schedule</a></li>
             </ul>
         </div>
-        <a href="SignIn.php">
-            <div class="sign_in">
-                <i class="fas fa-user"></i> Sign In
+        <?php if ($isLoggedIn) { ?>
+            <div class="profile" onclick="toggleLogout()">
+                <p class="username"><?= $fullName ?></p>
+                <div class="logout-menu" id="logoutMenu">
+                    <a href="includes/logout.php">Logout</a>
+                </div>
             </div>
-        </a>
+            <?php
+        } else { ?>
+            <a href="SignIn.php">
+                <div class="sign_in">
+                    <i class="fas fa-user"></i> Sign In
+                </div>
+            </a>
+            <?php
+        }
+        ?>
         <div class="menu-toggle" onclick="toggleMenu()">
             <div class="bar"></div>
             <div class="bar"></div>
@@ -161,7 +174,7 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
             <p>© 2025 F1 Academy Limited</p>
         </div>
     </footer>
-    <script src="JS/Slider&Menu.js"></script>
+    <script src="JS/Slider&Menu.js?v=2"></script>
 </body>
 
 </html>

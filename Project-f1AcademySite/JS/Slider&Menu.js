@@ -1,5 +1,3 @@
-console.log("Slider JS loaded") 
-
 document.addEventListener("DOMContentLoaded", function () {
     const wrapper = document.getElementById("news-container");
     const btnLeft = document.getElementById("btn-left");
@@ -19,4 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
 function toggleMenu() {
     const menu = document.querySelector('.list');
     menu.classList.toggle('active');
+}
+
+function toggleLogout() {
+    var menu = document.getElementById("logoutMenu");
+    menu.style.display = (menu.style.display === "block") ? "none" : "block";
 }

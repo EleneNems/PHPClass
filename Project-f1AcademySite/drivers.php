@@ -1,6 +1,7 @@
 <?php
 include "includes/connect.php";
 include "includes/layout.php";
+include "includes/user_profile_box.php";
 
 $query = "
     SELECT d.firstname, d.lastname, d.nationality, d.support, d.racing_number, d.main_pic_path, t.name AS team_name FROM drivers d JOIN teams t ON d.team_id = t.id
@@ -16,7 +17,7 @@ $result = mysqli_query($conn, $query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F1 Academy-Drivers</title>
-    <link rel="stylesheet" href="Css/layout.css?v=1">
+    <link rel="stylesheet" href="Css/layout.css?v=2">
     <link rel="stylesheet" href="Css/drivers.css?v=2">
 </head>
 
@@ -33,11 +34,23 @@ $result = mysqli_query($conn, $query);
                 <li><a href="schedule.php">Schedule</a></li>
             </ul>
         </div>
-        <a href="SignIn.php">
-            <div class="sign_in">
-                <i class="fas fa-user"></i> Sign In
+        <?php if ($isLoggedIn) { ?>
+            <div class="profile" onclick="toggleLogout()">
+                <p class="username"><?= $fullName ?></p>
+                <div class="logout-menu" id="logoutMenu">
+                    <a href="logout.php">Logout</a>
+                </div>
             </div>
-        </a>
+            <?php
+        } else { ?>
+            <a href="SignIn.php">
+                <div class="sign_in">
+                    <i class="fas fa-user"></i> Sign In
+                </div>
+            </a>
+            <?php
+        }
+        ?>
         <div class="menu-toggle" onclick="toggleMenu()">
             <div class="bar"></div>
             <div class="bar"></div>
@@ -53,9 +66,8 @@ $result = mysqli_query($conn, $query);
         </div>
 
         <div class="driver-grid">
-            <?php 
-            while ($driver = mysqli_fetch_assoc($result))
-            {?>
+            <?php
+            while ($driver = mysqli_fetch_assoc($result)) { ?>
                 <div class="driver-card">
                     <div class="driver-header">
                         <p><?= $driver['firstname'] ?></p>
@@ -65,10 +77,10 @@ $result = mysqli_query($conn, $query);
                         <p>Supported By: <span class="support"><?= $driver['support'] ?></span></p>
                         <p><?= $driver['team_name'] ?></p>
                     </div>
-                    <img src="<?=$driver['main_pic_path'] ?>" alt="Driver Image" class="driver-img">
+                    <img src="<?= $driver['main_pic_path'] ?>" alt="Driver Image" class="driver-img">
                     <div class="racing-number"><?= $driver['racing_number'] ?></div>
                 </div>
-            <?php
+                <?php
             }
             ?>
         </div>

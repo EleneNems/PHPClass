@@ -1,6 +1,7 @@
 <?php
 include "includes/connect.php";
 include "includes/layout.php";
+include "includes/user_profile_box.php";
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +11,7 @@ include "includes/layout.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F1 Academy-Schedule</title>
-    <link rel="stylesheet" href="Css/layout.css?v=1">
+    <link rel="stylesheet" href="Css/layout.css?v=2">
     <link rel="stylesheet" href="Css/schedule.css?v=3">
 </head>
 
@@ -27,11 +28,23 @@ include "includes/layout.php";
                 <li><a href="schedule.php">Schedule</a></li>
             </ul>
         </div>
-        <a href="SignIn.php">
-            <div class="sign_in">
-                <i class="fas fa-user"></i> Sign In
+        <?php if ($isLoggedIn) { ?>
+            <div class="profile" onclick="toggleLogout()">
+                <p class="username"><?= $fullName ?></p>
+                <div class="logout-menu" id="logoutMenu">
+                    <a href="logout.php">Logout</a>
+                </div>
             </div>
-        </a>
+            <?php
+        } else { ?>
+            <a href="SignIn.php">
+                <div class="sign_in">
+                    <i class="fas fa-user"></i> Sign In
+                </div>
+            </a>
+            <?php
+        }
+        ?>
         <div class="menu-toggle" onclick="toggleMenu()">
             <div class="bar"></div>
             <div class="bar"></div>

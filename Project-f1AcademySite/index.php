@@ -1,6 +1,9 @@
 <?php
+session_start();
 include "includes/connect.php";
 include "includes/layout.php";
+include "includes/user_profile_box.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -10,8 +13,8 @@ include "includes/layout.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F1 Academy</title>
-    <link rel="stylesheet" href="Css/layout.css?v=5">
-    <link rel="stylesheet" href="Css/HomePage.css?v=8">
+    <link rel="stylesheet" href="Css/layout.css?v=6">
+    <link rel="stylesheet" href="Css/HomePage.css?v=7">
 </head>
 
 <body>
@@ -29,11 +32,51 @@ include "includes/layout.php";
             </ul>
         </div>
 
-        <a href="SignIn.php">
-            <div class="sign_in">
-                <i class="fas fa-user"></i> Sign In
+        <?php if ($isLoggedIn) {
+            ?>
+            <div class="profile" onclick="toggleLogout()">
+                <p class="username"><?= $fullName ?></p>
+                <div class="logout-menu" id="logoutMenu">
+                    <a href="includes/logout.php">Logout</a>
+                    <a href="#" onclick="openDeleteConfirm(event)">Delete Account</a>
+
+                </div>
+                <!-- Step 1: Confirm Deletion -->
+                <div id="confirmDeleteModal" class="modal" style="display:none;">
+                    <div class="modal-content">
+                        <h3>Delete Account</h3>
+                        <p>Are you sure you want to delete your account?</p>
+                        <div class="modal-actions">
+                            <button onclick="proceedToPassword()">Yes</button>
+                            <button onclick="closeConfirmModal()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Password Prompt -->
+                <div id="passwordModal" class="modal" style="display:none;">
+                    <div class="modal-content">
+                        <h3>Enter Your Password</h3>
+                        <input type="password" id="deletePassword" placeholder="Password" required>
+                        <div class="modal-actions">
+                            <button type="button" onclick="submitAccountDeletion()">Delete</button>
+                            <button onclick="closePasswordModal()">Cancel</button>
+                        </div>
+                        <p id="deleteError" style="color:red; display:none;">Incorrect password. Try again.</p>
+                    </div>
+                </div>
+
             </div>
-        </a>
+            <?php
+        } else { ?>
+            <a href="SignIn.php">
+                <div class="sign_in">
+                    <i class="fas fa-user"></i> Sign In
+                </div>
+            </a>
+            <?php
+        }
+        ?>
 
         <div class="menu-toggle" onclick="toggleMenu()">
             <div class="bar"></div>
@@ -79,7 +122,7 @@ include "includes/layout.php";
                             $month = strtoupper(date("M", strtotime($row['date'])));
                             $newsId = $row['id'];
                             ?>
-                            
+
                             <a href="news.php?id=<?= $newsId ?>" class="news-card-link">
                                 <div class="news-card">
                                     <div class="news-image"
@@ -95,8 +138,8 @@ include "includes/layout.php";
                                     </div>
                                 </div>
                             </a>
-                        <?php
-                        }                    
+                            <?php
+                        }
                     }
                     ?>
                 </div>
@@ -231,6 +274,8 @@ include "includes/layout.php";
         </div>
     </footer>
 
-    <script src="JS/Slider&Menu.js"></script>
+    <script src="JS/Slider&Menu.js?v=1"></script>
+    <script src="JS/Delete_account.js?v=2"></script>
 </body>
+
 </html>

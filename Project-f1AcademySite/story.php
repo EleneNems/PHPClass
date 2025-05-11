@@ -1,6 +1,7 @@
 <?php
-include 'Includes/connect.php';
+include 'includes/connect.php';
 include "includes/layout.php";
+include "includes/user_profile_box.php";
 
 
 $storyId = intval($_GET['id']);
@@ -26,8 +27,8 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $story['title'] ?></title>
-    <link rel="stylesheet" href="Css/layout.css">
-    <link rel="stylesheet" href="Css/story-news.css?v=1">
+    <link rel="stylesheet" href="Css/layout.css?v=2">
+    <link rel="stylesheet" href="Css/story-news.css?v=5">
 </head>
 
 <body>
@@ -43,11 +44,23 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
                 <li><a href="schedule.php">Schedule</a></li>
             </ul>
         </div>
-        <a href="SignIn.php">
-            <div class="sign_in">
-                <i class="fas fa-user"></i> Sign In
+        <?php if ($isLoggedIn) { ?>
+            <div class="profile" onclick="toggleLogout()">
+                <p class="username"><?= $fullName ?></p>
+                <div class="logout-menu" id="logoutMenu">
+                    <a href="logout.php">Logout</a>
+                </div>
             </div>
-        </a>
+            <?php
+        } else { ?>
+            <a href="SignIn.php">
+                <div class="sign_in">
+                    <i class="fas fa-user"></i> Sign In
+                </div>
+            </a>
+            <?php
+        }
+        ?>
         <div class="menu-toggle" onclick="toggleMenu()">
             <div class="bar"></div>
             <div class="bar"></div>
@@ -103,26 +116,78 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
         <div class="comments-section">
             <h2>Comments</h2>
             <?php
-            $commentQuery = "SELECT c.comment_text, c.created_at, u.firstname, u.lastname FROM comments c JOIN users u ON c.user_id = u.id WHERE c.story_id = $storyId ORDER BY c.created_at DESC";
+            $commentQuery = "SELECT c.id, c.comment_text, c.created_at, c.user_id, c.is_edited, u.firstname, u.lastname FROM comments c JOIN users u ON c.user_id = u.id WHERE c.story_id = $storyId ORDER BY c.created_at DESC";
+
             $commentResult = mysqli_query($conn, $commentQuery);
+
+            if (isset($_SESSION['email']) && $_SESSION['role'] === 'user') {
+                $currentUserEmail = $_SESSION['email'];
+                $userQuery = mysqli_query($conn, "SELECT id FROM users WHERE email = '$currentUserEmail'");
+                $currentUser = mysqli_fetch_assoc($userQuery);
+                $currentUserId = $currentUser['id'];
+            }
+
+            if (isset($_SESSION['email']) && $_SESSION['role'] === 'user') {
+                ?>
+                <form method="POST" class="comment-form" action="includes/comment_logic.php">
+                    <div class="textarea-wrapper">
+                        <textarea name="comment_text" maxlength="500" placeholder="Write your comment here..."></textarea>
+                        <button type="submit" name="post_comment">Post</button>
+                    </div>
+                    <input type="hidden" name="story_id" value="<?= $storyId ?>">
+                </form>
+
+                <?php
+            }
 
             if ($commentResult && mysqli_num_rows($commentResult) > 0) {
                 while ($comment = mysqli_fetch_assoc($commentResult)) {
                     $commentDate = (new DateTime($comment['created_at']))->format('F j, Y H:i');
                     ?>
                     <div class="comment">
-                        <p class="comment-author"><?= $comment['firstname'] . ' ' . $comment['lastname'] ?>
+                        <p class="comment-author">
+                            <?= $comment['firstname'] . ' ' . $comment['lastname'] ?>
+                            <?php if ($comment['is_edited']) { ?>
+                                <span class="edited-label">(edited)</span>
+                            <?php } ?>
                             <span class="comment-date"><?= $commentDate ?></span>
                         </p>
-                        <p class="comment-text"><?= $comment['comment_text'] ?></p>
+
+                        <div class="comment-body">
+                            <p class="comment-text" id="comment-text-<?= $comment['id'] ?>">
+                                <?= htmlspecialchars($comment['comment_text']) ?>
+                            </p>
+
+                            <?php if (isset($currentUserId) && $comment['user_id'] == $currentUserId) { ?>
+                                <div class="comment-actions">
+                                    <button onclick="startEdit(<?= $comment['id'] ?>)">Edit</button>
+                                    <form method="POST" action="includes/comment_logic.php" class="inline-form"
+                                        style="display:inline;">
+                                        <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
+                                        <input type="hidden" name="story_id" value="<?= $storyId ?>">
+                                        <button type="submit" name="delete_comment">Delete</button>
+                                    </form>
+                                </div>
+                            <?php } ?>
+                        </div>
+
+                        <form method="POST" action="includes/comment_logic.php" id="edit-form-<?= $comment['id'] ?>"
+                            style="display:none;" class="edit-form">
+                            <input type="hidden" name="comment_id" value="<?=$comment['id']?>">
+                            <input type="hidden" name="story_id" value="<?=$storyId?>">
+                            <textarea name="edited_text" id="edit-text-<?= $comment['id'] ?>" required><?= htmlspecialchars($comment['comment_text']) ?></textarea>
+                            <button type="submit" name="edit_comment">Save</button>
+                            <button type="button" onclick="cancelEdit(<?= $comment['id'] ?>)">Cancel</button>
+                        </form>
                     </div>
+
                     <?php
                 }
                 ?>
-            <?php
+                <?php
             } else { ?>
                 <p>No comments yet. Be the first to comment!</p>
-            <?php
+                <?php
             } ?>
         </div>
     </main>
@@ -193,7 +258,7 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
         </div>
     </footer>
     <script src="JS/Slider&Menu.js"></script>
-
+    <script src="JS/Comment.js"></script>
 </body>
 
 </html>
