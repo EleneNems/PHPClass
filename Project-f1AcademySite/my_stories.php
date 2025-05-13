@@ -1,9 +1,11 @@
 <?php
-session_start();
 include "includes/connect.php";
 include "includes/layout.php";
 include "includes/user_profile_box.php";
+include "includes/post_story.php";
 
+$user_id = $_SESSION['user_id'];
+$result = mysqli_query($conn, "SELECT id, title, type, story_pic_path FROM stories WHERE author_id = $user_id ORDER BY id DESC");
 ?>
 
 <!DOCTYPE html>
@@ -12,17 +14,12 @@ include "includes/user_profile_box.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F1 Academy</title>
-    <link rel="stylesheet" href="Css/layout.css?v=8">
-    <link rel="stylesheet" href="Css/HomePage.css?v=8">
+    <title>My Stories</title>
+    <link rel="stylesheet" href="Css/layout.css?v=2">
+    <link rel="stylesheet" href="Css/my_stories.css?v=4">
 </head>
 
 <body>
-    <div class="intro-animation" id="introAnimation">
-        <img src="Assets/Layout/F1AcademyLogo.svg" alt="F1 Academy Logo" class="logo-drop" />
-        <img src="Assets/Layout/F1Car.png" alt="F1 Car" class="f1-car" />
-        <img src="Assets/Layout/Annoyed-bubble.png" class="annoyed-bubble" />
-    </div>
 
     <header>
         <a href="index.php">
@@ -88,127 +85,43 @@ include "includes/user_profile_box.php";
     </header>
 
     <main>
-        <div class="home-section">
-            <img src="Assets/Layout/HomePic.png" alt="F1 academy picture" class="home-bg">
-            <div class="home-content">
-                <h1>FINDING THE NEXT GENERATION OF TALENT ON AND OFF TRACK</h1>
-                <p>
-                    F1 Academy is here to champion the next generation of female talent to explore their own motorsport
-                    journeys.
-                    By breaking down barriers to entry on track in the F1 Academy Racing Series and through grassroots
-                    initiatives
-                    such as F1 Academy Discover Your Drive, we hope to make motorsport more diverse, inclusive and
-                    accessible.
-                </p>
-            </div>
-        </div>
+        <div class="container">
+            <h1>My Stories</h1>
+            <hr>
+            <?php if (isset($_GET['deleted'])) { ?>
+                <p style="color: green;">Story deleted successfully.</p>
+            <?php } ?>
 
-        <section class="news-section">
-            <div class="news_btn">
-                <h2 class="news-title">News</h2>
-                <div class="buttons">
-                    <button class="slider-btn" id="btn-left">←</button>
-                    <button class="slider-btn" id="btn-right">→</button>
-                </div>
-            </div>
-
-            <div class="news-slider">
-                <div class="news-cards-wrapper" id="news-container">
-                    <?php
-                    $query = "SELECT id, title, description, photo_path, date FROM news ORDER BY date DESC";
-                    $result = mysqli_query($conn, $query);
-
-                    if ($result && mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $day = date("d", strtotime($row['date']));
-                            $month = strtoupper(date("M", strtotime($row['date'])));
-                            $newsId = $row['id'];
-                            ?>
-
-                            <a href="news.php?id=<?= $newsId ?>" class="news-card-link">
-                                <div class="news-card">
-                                    <div class="news-image"
-                                        style="background-image: url('<?= $row['photo_path'] ?>'); background-size: cover; background-position: center;">
-                                        <div class="news-date">
-                                            <span class="day"><?= $day ?></span>
-                                            <span class="month"><?= $month ?></span>
-                                        </div>
-                                    </div>
-                                    <div class="news-info">
-                                        <h3 class="news-card-title"><?= $row['title'] ?></h3>
-                                        <p class="news-description"><?= $row['description'] ?></p>
-                                    </div>
-                                </div>
-                            </a>
-                            <?php
-                        }
-                    }
-                    ?>
-                </div>
-            </div>
-        </section>
-
-        <section class="stories-section">
-            <h2 class="section-title">Stories, Interviews and Reports</h2>
-
-            <div class="stories-inner">
-                <?php
-                $mainQuery = "SELECT s.id, s.title, s.story_pic_path, s.type, u.firstname, u.lastname FROM stories s JOIN users u ON s.author_id = u.id WHERE s.type IN ('main-story') ORDER BY s.created_at DESC LIMIT 1";
-                $mainResult = mysqli_query($conn, $mainQuery);
-
-                if ($mainResult && mysqli_num_rows($mainResult) > 0) {
-                    $mainStory = mysqli_fetch_assoc($mainResult);
-                    $fullname = $mainStory['firstname'] . ' ' . $mainStory['lastname'];
-                    ?>
-                    <a href="story.php?id=<?= $mainStory['id'] ?>" class="main-story-container">
-                        <div class="scrollable-content">
-                            <div class="story-image"
-                                style="background-image: url('<?= $mainStory['story_pic_path'] ?>'); background-size: cover; background-position: center;">
-                            </div>
+            <?php if (mysqli_num_rows($result) > 0) { ?>
+                ` <div class="story-list">
+                    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                        <div class="story-item">
+                            <img src="<?= $row['story_pic_path'] ?>" alt="Story Image">
                             <div class="story-info">
-                                <span class="story-label"><?= $mainStory['type'] ?></span>
-                                <h3 class="story-title"><?= $mainStory['title'] ?></h3>
-                                <p class="story-desc">by: <?= $fullname ?></p>
+                                <h3><?= $row['title'] ?></h3>
+                                <p>Type: <span><?= $row['type'] ?></span> </p>
+                                <a href="story.php?id=<?= $row['id'] ?>">View Story</a>
+                                <a href="#" class="delete-btn" data-story-id="<?= $row['id'] ?>">Delete Story</a>
                             </div>
                         </div>
-                    </a>
-                    <?php
-                }
-                ?>
-
-                <div class="story-list">
-                    <?php
-                    $otherQuery = "SELECT s.id, s.title, s.story_pic_path, s.type, u.firstname, u.lastname 
-                           FROM stories s 
-                           JOIN users u ON s.author_id = u.id 
-                           WHERE s.type IN ('Story', 'Interview', 'report') 
-                           ORDER BY s.created_at DESC LIMIT 6";
-
-                    $otherResult = mysqli_query($conn, $otherQuery);
-
-                    if ($otherResult && mysqli_num_rows($otherResult) > 0) {
-                        while ($story = mysqli_fetch_assoc($otherResult)) {
-                            $fullname = $story['firstname'] . ' ' . $story['lastname'];
-                            ?>
-                            <a href="story.php?id=<?= $story['id'] ?>" class="story-card">
-                                <div class="story-image"
-                                    style="background-image: url('<?= $story['story_pic_path'] ?>'); background-size: cover; background-position: center;">
-                                </div>
-                                <div class="story-info">
-                                    <span class="story-label"><?= $story['type'] ?></span>
-                                    <h3 class="story-title"><?= $story['title'] ?></h3>
-                                    <p class="story-desc">by: <?= $fullname ?></p>
-                                </div>
-                            </a>
-                            <?php
-                        }
-                    }
-                    ?>
+                    <?php } ?>
                 </div>
-            </div>
-        </section>
+            <?php } else { ?>
+                <p>You haven't posted any stories yet.</p>
+            <?php } ?>
+        </div>
     </main>
 
+    <div id="deleteModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Confirm Deletion</h3>
+            <p>Are you sure you want to delete this story?</p>
+            <div class="modal-actions">
+                <button id="confirmDelete">Delete</button>
+                <button onclick="closeDeleteModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="footer_list">
@@ -277,8 +190,7 @@ include "includes/user_profile_box.php";
     </footer>
 
     <script src="JS/Slider&Menu.js?v=1"></script>
-    <script src="JS/Delete_account.js?v=2"></script>
-    <script src="JS/Intro_animation.js?v=3"></script>
+    <script src="JS/Delete_account.js?v=3"></script>
 </body>
 
 </html>

@@ -62,3 +62,24 @@ function submitAccountDeletion() {
         document.getElementById("deleteError").style.display = "block";
     });
 }
+
+let storyIdToDelete = null;
+
+document.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        storyIdToDelete = this.getAttribute('data-story-id');
+            document.getElementById('deleteModal').style.display = 'block';
+    });
+});
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').style.display = 'none';
+    storyIdToDelete = null;
+}
+
+document.getElementById('confirmDelete').addEventListener('click', function () {
+    if (storyIdToDelete) {
+        window.location.href = `Includes/delete_story.php?id=${storyIdToDelete}`;
+    }
+});

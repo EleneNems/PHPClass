@@ -1,0 +1,124 @@
+main{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+form{
+    margin: 100px auto;
+    width: 100%;
+    max-width: 500px;
+    background-color: #1a1a1a;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #6b2a4a;
+    backdrop-filter: blur(10px);
+}
+
+h1, h3{
+    color: white;
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+label{
+    color: white;
+    font-weight: 600;
+    display: block;
+    margin: 15px 0 5px;
+}
+
+input[type="text"],
+input[type="file"],
+select{
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: white;
+    color: gray;
+    box-sizing: border-box;
+}
+
+select{
+    background-color: white;
+    color: gray;
+}
+
+.photo-set{
+    margin-top: 15px;
+}
+
+.photo-set input[type="text"]{
+    margin-top: 8px;
+}
+
+button[type="button"],
+button.submit-btn{
+    margin-top: 20px;
+    background-color: #c3047c;
+    border: none;
+    color: white;
+    padding: 12px;
+    width: 100%;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="button"]:hover,
+button.submit-btn:hover{
+    background-color: #c3047c;
+}
+
+.file-upload-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.custom-upload-btn{
+    background-color: #c3047c;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-upload-btn input[type="file"]{
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+.hidden-input{
+    display: none;
+}
+
+.file-name{
+    color: #888;
+    font-size: 14px;
+}
+
+.story_content{
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    color: gray;
+    box-sizing: border-box;
+}
