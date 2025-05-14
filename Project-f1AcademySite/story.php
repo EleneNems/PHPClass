@@ -48,19 +48,47 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
             <div class="profile" onclick="toggleLogout()">
                 <p class="username"><?= $fullName ?></p>
                 <div class="logout-menu" id="logoutMenu">
-                    <a href="logout.php">Logout</a>
+                    <?php if ($isAdmin) { ?>
+                        <a href="Admin/admin_dashboard.php">View as Admin</a>
+                    <?php } elseif ($isAdmin) { ?>
+                        <a href="../index.php">View as User</a>
+                    <?php } ?>
+                    <a href="post_story.php">Post a Story</a>
+                    <a href="my_stories.php">My Stories</a>
+                    <a href="includes/logout.php">Logout</a>
+                    <a href="#" onclick="openDeleteConfirm(event)">Delete Account</a>
+                </div>
+
+                <div id="confirmDeleteModal" class="modal" style="display:none;">
+                    <div class="modal-content">
+                        <h3>Delete Account</h3>
+                        <p>Are you sure you want to delete your account?</p>
+                        <div class="modal-actions">
+                            <button onclick="proceedToPassword()">Yes</button>
+                            <button onclick="closeConfirmModal()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="passwordModal" class="modal" style="display:none;">
+                    <div class="modal-content">
+                        <h3>Enter Your Password</h3>
+                        <input type="password" id="deletePassword" placeholder="Password" required>
+                        <div class="modal-actions">
+                            <button type="button" onclick="submitAccountDeletion()">Delete</button>
+                            <button onclick="closePasswordModal()">Cancel</button>
+                        </div>
+                        <p id="deleteError" style="color:red; display:none;">Incorrect password. Try again.</p>
+                    </div>
                 </div>
             </div>
-            <?php
-        } else { ?>
+        <?php } else { ?>
             <a href="SignIn.php">
                 <div class="sign_in">
                     <i class="fas fa-user"></i> Sign In
                 </div>
             </a>
-            <?php
-        }
-        ?>
+        <?php } ?>
         <div class="menu-toggle" onclick="toggleMenu()">
             <div class="bar"></div>
             <div class="bar"></div>
@@ -173,9 +201,10 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
 
                         <form method="POST" action="includes/comment_logic.php" id="edit-form-<?= $comment['id'] ?>"
                             style="display:none;" class="edit-form">
-                            <input type="hidden" name="comment_id" value="<?=$comment['id']?>">
-                            <input type="hidden" name="story_id" value="<?=$storyId?>">
-                            <textarea name="edited_text" id="edit-text-<?= $comment['id'] ?>" required><?= htmlspecialchars($comment['comment_text']) ?></textarea>
+                            <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
+                            <input type="hidden" name="story_id" value="<?= $storyId ?>">
+                            <textarea name="edited_text" id="edit-text-<?= $comment['id'] ?>"
+                                required><?= htmlspecialchars($comment['comment_text']) ?></textarea>
                             <button type="submit" name="edit_comment">Save</button>
                             <button type="button" onclick="cancelEdit(<?= $comment['id'] ?>)">Cancel</button>
                         </form>
@@ -259,6 +288,7 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
     </footer>
     <script src="JS/Slider&Menu.js"></script>
     <script src="JS/Comment.js"></script>
+    <script src="JS/Delete_account.js"></script>
 </body>
 
 </html>

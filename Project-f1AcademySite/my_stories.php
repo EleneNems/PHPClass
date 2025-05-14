@@ -40,6 +40,11 @@ $result = mysqli_query($conn, "SELECT id, title, type, story_pic_path FROM stori
                 <p class="username"><?= $fullName ?></p>
 
                 <div class="logout-menu" id="logoutMenu">
+                    <?php if ($isAdmin) { ?>
+                        <a href="Admin/admin_dashboard.php">View as Admin</a>
+                    <?php } elseif ($isAdmin) { ?>
+                        <a href="../index.php">View as User</a>
+                    <?php } ?>
                     <a href="post_story.php">Post a Story</a>
                     <a href="my_stories.php">My Stories</a>
                     <a href="includes/logout.php">Logout</a>

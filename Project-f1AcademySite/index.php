@@ -1,5 +1,4 @@
 <?php
-session_start();
 include "includes/connect.php";
 include "includes/layout.php";
 include "includes/user_profile_box.php";
@@ -43,6 +42,11 @@ include "includes/user_profile_box.php";
                 <p class="username"><?= $fullName ?></p>
 
                 <div class="logout-menu" id="logoutMenu">
+                    <?php if ($isAdmin) { ?>
+                        <a href="Admin/admin_dashboard.php">View as Admin</a>
+                    <?php } elseif ($isAdmin) { ?>
+                        <a href="../index.php">View as User</a>
+                    <?php } ?>
                     <a href="post_story.php">Post a Story</a>
                     <a href="my_stories.php">My Stories</a>
                     <a href="includes/logout.php">Logout</a>
@@ -149,7 +153,7 @@ include "includes/user_profile_box.php";
         </section>
 
         <section class="stories-section">
-            <h2 class="section-title">Stories, Interviews and Reports</h2>
+            <h2 class="section-title">Our Community</h2>
 
             <div class="stories-inner">
                 <?php

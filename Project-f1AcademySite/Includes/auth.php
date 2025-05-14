@@ -25,7 +25,7 @@ if (isset($_POST['sign-in-btn'])) {
             $_SESSION['user_id'] = $userId; 
 
             if ($role === 'admin') {
-                header("Location: admin_dashboard.php");
+                header("Location: ./Admin/admin_dashboard.php");
                 exit();
             } else {
                 header("Location: ./index.php");

@@ -1,0 +1,252 @@
+body{
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    background-color: #050505; 
+    color: #fff;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #c3047c;
+    padding: 15px 30px;
+    box-sizing: border-box;
+    height: 80px;
+}
+
+header img{
+    width: 240px;
+    height: auto;
+}
+
+nav a{
+    margin-left: 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.admin-container{
+    display: flex;
+    min-height: 100vh;
+}
+
+aside{
+    width: 200px;
+    background: #111;
+    padding: 20px;
+}
+
+aside ul{
+    list-style: none;
+    padding: 0;
+}
+
+aside ul li{
+    margin: 20px 0;
+}
+
+aside ul li a{
+    color: #c3047c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+main{
+    flex: 1;
+    padding: 30px;
+}
+
+.card-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card{
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #c3047c;
+}
+
+.dashboard-stats{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.dashboard-stats .card{
+    background-color: #1e1e1e;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1 1 200px;
+    text-align: center;
+    box-shadow: 0 0 10px #c3047c;
+}
+
+.canvas-wrapper{
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+    align-self: center;
+    gap: 30px;
+    margin-top: 30px;
+    padding: 0 20px;
+}
+
+.canvas-box{
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 500px;
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.canvas-box.full-row{
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+}
+
+.user-summary-cards{
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.user-summary-cards .card{
+    flex: 1;
+    background-color: #c3047c;
+    border-left: 5px solid white;
+    padding: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-controls{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.user-controls input,
+.user-controls select{
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 48%;
+}
+
+.user-table{
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-table th,
+.user-table td{
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-table th{
+    background-color: #c3047c;
+    font-weight: bold;
+}
+
+.badge{
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.badge.user{
+    background-color: #54c8e8;
+}
+
+.badge.admin{
+    background-color: #c3047c;
+}
+
+.promote-btn,
+.demote-btn{
+    background-color: #54c8e8;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    font-size: 0.9rem;
+    transition: background-color 1s;
+}
+
+.promote-btn:hover{
+    background-color: #c3047c;
+}
+
+.demote-btn{
+    background-color: #c30437;
+    color: white;
+}
+
+.demote-btn:hover{
+    background-color: #a1012c;
+}
+
+form button{
+    font-family: 'Orbitron', sans-serif;
+}
+
+.profile{
+    font-weight: bold;
+    padding: 10px;
+    width: 140px;
+    font-size: 14px;
+    border-radius: 5px 5px 0 0;
+    position: relative;
+    cursor: pointer;
+    background-color: #1a1a1a;
+    color: white;
+    user-select: none;
+}
+
+.profile .username{
+    margin: 0;
+    text-align: center;
+}
+
+.logout-menu{
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    text-align: center;
+    z-index: 1000;
+}
+
+.logout-menu a{
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.logout-menu a:hover{
+    background-color: #333;
+}
