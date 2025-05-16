@@ -46,6 +46,11 @@
     margin: 0 0 10px;
     font-size: 20px;
     color: white;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .story-info p{

@@ -16,7 +16,7 @@ $result = mysqli_query($conn, "SELECT id, title, type, story_pic_path FROM stori
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Stories</title>
     <link rel="stylesheet" href="Css/layout.css?v=2">
-    <link rel="stylesheet" href="Css/my_stories.css?v=4">
+    <link rel="stylesheet" href="Css/my_stories.css?v=5">
 </head>
 
 <body>

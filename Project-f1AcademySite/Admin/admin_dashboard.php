@@ -11,7 +11,7 @@ include "../includes/user_profile_box.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../Css/admin_dashboard.css?v=3">
+    <link rel="stylesheet" href="../Css/admin_dashboard.css?v=4">
 </head>
 
 <body>
@@ -112,6 +112,8 @@ include "../includes/user_profile_box.php";
             </div>';
             } elseif (isset($_GET['page']) && $_GET['page'] == 'users') {
                 include "manage_users.php";
+            } elseif (isset($_GET['page']) && $_GET['page'] == 'teams') {
+                include "manage_teams.php";
             }
             ?>
 
@@ -128,7 +130,17 @@ include "../includes/user_profile_box.php";
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../JS/Charts.js"></script>
-    <script src="../JS/Delete_account.js?v=2"></script>
+    <script>
+        function toggleLogout() {
+            const menu = document.getElementById("logoutMenu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
+        function closeLogoutMenu() {
+            const menu = document.getElementById("logoutMenu");
+            if (menu) menu.style.display = "none";
+        }
+    </script>
 </body>
 
 </html>
