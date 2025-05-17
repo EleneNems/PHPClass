@@ -11,7 +11,7 @@ include "../includes/user_profile_box.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../Css/admin_dashboard.css?v=4">
+    <link rel="stylesheet" href="../Css/admin_dashboard.css?v=7">
 </head>
 
 <body>
@@ -114,6 +114,10 @@ include "../includes/user_profile_box.php";
                 include "manage_users.php";
             } elseif (isset($_GET['page']) && $_GET['page'] == 'teams') {
                 include "manage_teams.php";
+            } elseif (isset($_GET['page']) && $_GET['page'] == 'drivers') {
+                include "manage_drivers.php";
+            } elseif (isset($_GET['page']) && $_GET['page'] == 'news') {
+                include "manage_news.php";
             }
             ?>
 

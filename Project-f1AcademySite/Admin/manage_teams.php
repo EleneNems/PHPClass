@@ -22,7 +22,7 @@ $oldName = $_GET['oldName'] ?? '';
     </thead>
     <tbody>
         <?php while ($team = mysqli_fetch_assoc($teams)) { ?>
-           <tr onclick="openEditModal(<?= $team['id'] ?>)">
+            <tr ondblclick="openEditModal(<?= $team['id'] ?>)">
                 <td>
                     <img src="<?= "../" . $team['logo'] ?>" alt="<?= $team['name'] ?> logo"
                         style="height: 30px; vertical-align: middle; margin-right: 10px; background: white; padding: 4px; border-radius: 6px;"
@@ -68,10 +68,8 @@ $oldName = $_GET['oldName'] ?? '';
                 <td><?= $team['total_points'] ?></td>
 
                 <td>
-                    <form method="POST" action="Commands/delete_team.php" style="display:inline;">
-                        <input type="hidden" name="team_id" value="<?= $team['id'] ?>">
-                        <button type="submit" class="delete-btn">Delete</button>
-                    </form>
+                    <button class="delete-btn"
+                        onclick="event.stopPropagation(); event.preventDefault(); confirmDelete(<?= $team['id'] ?>);">Delete</button>
                 </td>
             </tr>
         <?php } ?>
@@ -82,27 +80,19 @@ $oldName = $_GET['oldName'] ?? '';
     ➕ Add New Team
 </div>
 
-<div id="teamModal" class="modal">
+<div id="deleteConfirmModal" class="modal" style="display:none;">
     <div class="modal-content">
-        <span class="close" onclick="closeTeamModal()">&times;</span>
-        <h2>Add New Team</h2>
-        <form action="Commands/add_team.php" method="POST" enctype="multipart/form-data">
-            <label for="team_name">Team Name:</label>
-            <input type="text" name="team_name" id="team_name" value="<?= $oldName ?>">
-            <?php if (!empty($nameErr)) { ?>
-                <p class="error-text"><?= $nameErr ?></p>
-            <?php } ?>
-
-            <label for="team_logo">Team Logo (Image):</label>
-            <input type="file" name="team_logo" id="team_logo" accept="image/*">
-            <?php if (!empty($logoErr)) { ?>
-                <p class="error-text"><?= $logoErr ?></p>
-            <?php } ?>
-
-            <button type="submit">Add Team</button>
+        <span class="close" onclick="closeDeleteModal()">&times;</span>
+        <h2>Confirm Deletion</h2>
+        <p>Are you sure you want to delete this team?</p>
+        <form id="confirmDeleteForm" method="POST" action="Commands/delete_team.php">
+            <input type="hidden" name="team_id" id="delete_team_id">
+            <button type="submit" class="delete-btn">Yes, Delete</button>
+            <button type="button" onclick="closeDeleteModal()">Cancel</button>
         </form>
     </div>
 </div>
+
 <div id="teamModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeTeamModal()">&times;</span>
@@ -126,24 +116,24 @@ $oldName = $_GET['oldName'] ?? '';
 </div>
 
 <div id="editTeamModal" class="modal" style="display:none;">
-  <div class="modal-content">
-    <span class="close" onclick="closeEditModal()">&times;</span>
-    <h2>Edit Team</h2>
-    <form action="Commands/edit_team.php" method="POST" enctype="multipart/form-data">
-      <input type="hidden" name="team_id" id="edit_team_id">
+    <div class="modal-content">
+        <span class="close" onclick="closeEditModal()">&times;</span>
+        <h2>Edit Team</h2>
+        <form action="Commands/edit_team.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="team_id" id="edit_team_id">
 
-      <label for="edit_team_name">Team Name:</label>
-      <input type="text" name="team_name" id="edit_team_name" required>
+            <label for="edit_team_name">Team Name:</label>
+            <input type="text" name="team_name" id="edit_team_name" required>
 
-      <label for="edit_team_logo">Team Logo (optional):</label>
-      <input type="file" name="team_logo" id="edit_team_logo" accept="image/*">
+            <label for="edit_team_logo">Team Logo (optional):</label>
+            <input type="file" name="team_logo" id="edit_team_logo" accept="image/*">
 
-      <button type="submit">Save Changes</button>
-    </form>
-  </div>
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
 </div>
 
 
 <script src="../JS/Form_modal.js"></script>
 <script src="../JS/Sorting.js"></script>
-<script src="../JS/Edit_modal.js"></script>
+<script src="../JS/Edit_modal.js?v=2"></script>
