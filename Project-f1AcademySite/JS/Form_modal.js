@@ -14,12 +14,57 @@ function closeTeamModal(){
     document.getElementById("teamModal").style.display = "none";
 }
 
-window.onclick = function(event){
-    if (event.target.classList.contains("modal")) {
-        closeTeamModal();
-        closeDriverModal();
-    }
+function openAddNewsModal() {
+    document.getElementById("addNewsModal").style.display = "block";
 }
+
+function closeAddNewsModal() {
+    document.getElementById("addNewsModal").style.display = "none";
+}
+
+function openAddRaceModal() {
+    document.getElementById("addRaceModal").style.display = "block";
+}
+
+function closeAddRaceModal() {
+    document.getElementById("addRaceModal").style.display = "none";
+}
+
+function confirmDeleteDriver(driverId) {
+    document.getElementById('delete_driver_id').value = driverId;
+    document.getElementById('deleteDriverModal').style.display = 'block';
+}
+
+function closeDeleteDriverModal() {
+    document.getElementById('deleteDriverModal').style.display = 'none';
+}
+
+function openDeleteNewsModal(newsId) {
+    document.getElementById('delete_news_id').value = newsId;
+    document.getElementById('deleteNewsModal').style.display = 'block';
+}
+
+function closeDeleteNewsModal() {
+    document.getElementById('deleteNewsModal').style.display = 'none';
+}
+
+function openDeleteRaceModal(raceId) {
+    document.getElementById('delete_race_id').value = raceId;
+    document.getElementById('deleteRaceModal').style.display = 'block';
+}
+
+function closeDeleteRaceModal() {
+    document.getElementById('deleteRaceModal').style.display = 'none';
+}
+
+window.onclick = function(event) {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+};
 
 window.onload = function () {
     const urlParams = new URLSearchParams(window.location.search);
@@ -39,28 +84,31 @@ window.onload = function () {
     ) {
         openDriverModal();
     }
+
+    if (
+        urlParams.has('nameErr') ||
+        urlParams.has('locationErr') ||
+        urlParams.has('startErr') ||
+        urlParams.has('endErr') ||
+        urlParams.has('coverErr') ||
+        urlParams.has('circuitErr')
+    ) {
+        openAddRaceModal();
+    }
+
+    if (
+        urlParams.has('titleErr') ||
+        urlParams.has('descErr') ||
+        urlParams.has('contentErr') ||
+        urlParams.has('mainErr')
+    ) {
+        openAddNewsModal();
+    }
 };
 
-function confirmDeleteDriver(driverId) {
-    document.getElementById('delete_driver_id').value = driverId;
-    document.getElementById('deleteDriverModal').style.display = 'block';
-}
-
-function closeDeleteDriverModal() {
-    document.getElementById('deleteDriverModal').style.display = 'none';
-}
-
-function openAddNewsModal() {
-    document.getElementById("addNewsModal").style.display = "block";
-}
-
-function closeAddNewsModal() {
-    document.getElementById("addNewsModal").style.display = "none";
-}
-
 window.onclick = function(event) {
-    const modal = document.getElementById("addNewsModal");
-    if (event.target === modal) {
-        modal.style.display = "none";
+    const raceModal = document.getElementById('deleteRaceModal');
+    if (event.target === raceModal) {
+        raceModal.style.display = 'none';
     }
 };

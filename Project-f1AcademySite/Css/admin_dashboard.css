@@ -439,7 +439,7 @@ form button{
     padding: 15px;
 }
 
-.card-content h3{
+.card-content h3, .race-card h3{
     margin: 0 0 10px;
     color: #c3047c;
     font-size: 1.1rem;
@@ -452,7 +452,7 @@ form button{
     text-overflow: ellipsis;
 }
 
-.card-content p{
+.card-content p, .race-card p{
     color: #ddd;
     font-size: 0.95rem;
     line-height: 1.4;
@@ -476,7 +476,7 @@ form button{
     gap: 10px;
 }
 
-.card-actions button{
+.card-actions button, .race-card button{
     flex: 1;
     padding: 8px;
     background-color: #c3047c;
@@ -486,7 +486,7 @@ form button{
     border-radius: 5px;
 }
 
-.card-actions button:hover{
+.card-actions button:hover, .race-card button:hover{
     background-color: #a50269;
 }
 
@@ -506,9 +506,15 @@ form button{
     opacity: 0;
 }
 
-.news-card:nth-child(1) { animation-delay: 0s; }
-.news-card:nth-child(2) { animation-delay: 0.1s; }
-.news-card:nth-child(3) { animation-delay: 0.2s; }
+.news-card:nth-child(1){ 
+    animation-delay: 0s; 
+}
+.news-card:nth-child(2){
+    animation-delay: 0.1s; 
+}
+.news-card:nth-child(3){
+    animation-delay: 0.2s; 
+}
 
 .news-card:hover{
     transform: translateY(-5px);
@@ -535,6 +541,146 @@ form button{
     color: #c3047c;
     font-size: 1.2rem;
     font-weight: bold;
+}
+
+.races-container{
+    padding: 20px;
+    color: white;
+}
+
+.race-card{
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px #00000088;
+    display: flex;
+    flex-direction: column;
+    animation: fadeInUp 0.5s ease forwards;
+    opacity: 0;
+}
+
+.race-card img{
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px 20px;
+}
+
+.race-card .card-content h3{
+    color: #c3047c;
+    margin: 0 0 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.race-card .card-content p{
+    color: #ddd;
+    font-size: 0.95rem;
+    margin: 5px 0;
+}
+
+.race-card .card-content strong{
+    color: #c3047c;
+    opacity: 70%;
+}
+
+.race-card .card-actions button{
+    background-color: #c3047c;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: 1;
+}
+
+.race-card .card-actions button:hover{
+    background-color: #a50269;
+}
+
+.race-card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(240, 109, 176, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-race-card{
+    background-color: #1e1e1e;
+    border: 2px dashed #c3047c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-race-card:hover{
+    background-color: #2c2c2c;
+    transform: scale(1.03);
+}
+
+.add-race-card .add-card-content span{
+    color: #c3047c;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.race-card:nth-child(1){ 
+    animation-delay: 0s; 
+}
+.race-card:nth-child(2){ 
+    animation-delay: 0.1s; 
+}
+.race-card:nth-child(3){ 
+    animation-delay: 0.2s; 
+}
+
+.manage-results-container{
+    padding: 20px;
+    margin: auto;
+}
+
+.session-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.session-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+.hidden {
+    display: none;
+}
+
+.session-card h4{
+    margin: 0 0 10px;
+}
+
+button{
+    padding: 10px 20px;
+    background: #c3047c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.race_select{
+    height: 30px;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.event-dates{
+    color: #c3047c;
+    font-size: 15px;
 }
 
 .modal-content textarea{

@@ -20,7 +20,7 @@ function old($key)
                     <p class="date"><?= date('F j, Y', strtotime($row['Date'])) ?></p>
                     <div class="card-actions">
                         <button onclick="openEditModal(<?= $row['id'] ?>)">Edit</button>
-                        <button onclick="deleteNews(<?= $row['id'] ?>)">Delete</button>
+                        <button onclick="openDeleteNewsModal(<?= $row['id'] ?>)">Delete</button>
                     </div>
                 </div>
             </div>
@@ -81,6 +81,41 @@ function old($key)
     </div>
 </div>
 
+<div id="deleteNewsModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeDeleteNewsModal()">&times;</span>
+        <h2>Confirm Deletion</h2>
+        <p>Are you sure you want to delete this news post?</p>
+        <form id="confirmNewsDeleteForm" method="POST" action="Commands/delete_news.php">
+            <input type="hidden" name="news_id" id="delete_news_id">
+            <button type="submit" class="delete-btn">Yes, Delete</button>
+            <button type="button" onclick="closeDeleteNewsModal()">Cancel</button>
+        </form>
+    </div>
+</div>
 
-<script src="../JS/Form_modal.js"></script>
+<div id="editNewsModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeEditNewsModal()">&times;</span>
+        <h2>Edit News</h2>
+
+        <form id="editNewsForm" action="Commands/edit_news.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="news_id" id="edit_news_id">
+
+            <label>Title:</label>
+            <input type="text" name="title" id="edit_news_title" required>
+
+            <label>Description:</label>
+            <textarea name="description" id="edit_news_description" rows="3" required></textarea>
+
+            <label>Replace Main Photo (optional):</label>
+            <input type="file" name="main_photo" accept="image/*">
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+<script src="../JS/Form_modal.js?v=3"></script>
 <script src="../JS/AddPhoto.js"></script>
+<script src="../JS/Edit_modal.js"></script>

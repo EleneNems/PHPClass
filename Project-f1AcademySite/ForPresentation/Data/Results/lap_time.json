@@ -1,0 +1,19 @@
+[
+  {"driver_id": 17, "position": 1, "lap_time": "2:03.981"},
+  {"driver_id": 9, "position": 2, "lap_time": "2:04.027"},
+  {"driver_id": 14, "position": 3, "lap_time": "2:04.099"},
+  {"driver_id": 6, "position": 4, "lap_time": "2:04.122"},
+  {"driver_id": 13, "position": 5, "lap_time": "2:04.176"},
+  {"driver_id": 10, "position": 6, "lap_time": "2:04.244"},
+  {"driver_id": 11, "position": 7, "lap_time": "2:04.312"},
+  {"driver_id": 15, "position": 8, "lap_time": "2:04.379"},
+  {"driver_id": 5, "position": 9, "lap_time": "2:04.453"},
+  {"driver_id": 8, "position": 10, "lap_time": "2:04.519"},
+  {"driver_id": 1, "position": 11, "lap_time": "2:04.607"},
+  {"driver_id": 4, "position": 12, "lap_time": "2:04.688"},
+  {"driver_id": 2, "position": 13, "lap_time": "2:04.777"},
+  {"driver_id": 16, "position": 14, "lap_time": "2:04.845"},
+  {"driver_id": 12, "position": 15, "lap_time": "2:04.912"},
+  {"driver_id": 3, "position": 16, "lap_time": "2:05.021"},
+  {"driver_id": 7, "position": 17, "lap_time": "2:05.142"}
+]

@@ -43,3 +43,40 @@ function openEditDriverModal(driverId) {
 function closeEditDriverModal() {
     document.getElementById('editDriverModal').style.display = 'none';
 }
+
+function openEditModal(id) {
+    const card = document.querySelector(`.news-card button[onclick="openEditModal(${id})"]`).closest('.news-card');
+    const title = card.querySelector('h3').innerText;
+    const description = card.querySelector('strong').innerText;
+
+    document.getElementById('edit_news_id').value = id;
+    document.getElementById('edit_news_title').value = title;
+    document.getElementById('edit_news_description').value = description;
+
+    document.getElementById('editNewsModal').style.display = 'block';
+}
+
+function closeEditNewsModal() {
+    document.getElementById('editNewsModal').style.display = 'none';
+}
+
+function openEditRaceModal(id) {
+    const card = document.querySelector(`.race-card button[onclick="openEditRaceModal(${id})"]`).closest('.race-card');
+
+    const name = card.querySelector('h3').innerText;
+    const location = card.querySelector('p:nth-of-type(1)').innerText.replace('Location: ', '');
+    const start = card.querySelector('p:nth-of-type(2)').innerText.replace('Start: ', '');
+
+    const startDate = new Date(start).toISOString().split('T')[0];
+
+    document.getElementById('edit_race_id').value = id;
+    document.getElementById('edit_race_name').value = name;
+    document.getElementById('edit_race_location').value = location;
+    document.getElementById('edit_race_start').value = startDate;
+
+    document.getElementById('editRaceModal').style.display = 'block';
+}
+
+function closeEditRaceModal() {
+    document.getElementById('editRaceModal').style.display = 'none';
+}
