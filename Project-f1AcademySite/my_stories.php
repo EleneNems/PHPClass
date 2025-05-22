@@ -16,7 +16,7 @@ $result = mysqli_query($conn, "SELECT id, title, type, story_pic_path FROM stori
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Stories</title>
     <link rel="stylesheet" href="Css/layout.css?v=2">
-    <link rel="stylesheet" href="Css/my_stories.css?v=5">
+    <link rel="stylesheet" href="Css/my_stories.css?v=6">
 </head>
 
 <body>
@@ -98,9 +98,10 @@ $result = mysqli_query($conn, "SELECT id, title, type, story_pic_path FROM stori
             <?php } ?>
 
             <?php if (mysqli_num_rows($result) > 0) { ?>
-                ` <div class="story-list">
+                ` <?php $delay = 0; ?>
+                <div class="story-list">
                     <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-                        <div class="story-item">
+                        <div class="story-item fade-slide" style="animation-delay: <?= ($delay++ * 0.1) ?>s;">
                             <img src="<?= $row['story_pic_path'] ?>" alt="Story Image">
                             <div class="story-info">
                                 <h3><?= $row['title'] ?></h3>

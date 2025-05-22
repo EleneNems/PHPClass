@@ -8,7 +8,7 @@ $oldName = $_GET['oldName'] ?? '';
 ?>
 
 <div class="team-summary-cards">
-    <div class="card">🏁 Total Teams: <?= $teamCount ?></div>
+    <div class="card"><i class="fas fa-flag-checkered animated-icon"></i> Total Teams: <?= $teamCount ?></div>
 </div>
 
 <table class="team-table">
@@ -22,7 +22,7 @@ $oldName = $_GET['oldName'] ?? '';
     </thead>
     <tbody>
         <?php while ($team = mysqli_fetch_assoc($teams)) { ?>
-            <tr ondblclick="openEditModal(<?= $team['id'] ?>)">
+            <tr ondblclick="openEditModal(<?= $team['id'] ?>)" style="--i: <?= $team['id'] ?>;">
                 <td>
                     <img src="<?= "../" . $team['logo'] ?>" alt="<?= $team['name'] ?> logo"
                         style="height: 30px; vertical-align: middle; margin-right: 10px; background: white; padding: 4px; border-radius: 6px;"
@@ -77,7 +77,7 @@ $oldName = $_GET['oldName'] ?? '';
 </table>
 
 <div class="card add-team-card" onclick="openTeamModal()">
-    ➕ Add New Team
+    <i class="fas fa-plus-circle animated-icon"></i> Add New Team
 </div>
 
 <div id="deleteConfirmModal" class="modal" style="display:none;">
@@ -136,4 +136,29 @@ $oldName = $_GET['oldName'] ?? '';
 
 <script src="../JS/Form_modal.js"></script>
 <script src="../JS/Sorting.js"></script>
-<script src="../JS/Edit_modal.js?v=2"></script>
+<script>
+    function openEditModal(teamId) {
+        fetch(`Commands/get_team_data.php?id=${teamId}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("edit_team_id").value = data.team.id;
+                document.getElementById("edit_team_name").value = data.team.name;
+
+                document.getElementById("editTeamModal").style.display = "block";
+            });
+    }
+
+    function closeEditModal() {
+        document.getElementById('editTeamModal').style.display = 'none';
+    }
+
+    function confirmDelete(teamId) {
+        document.getElementById('delete_team_id').value = teamId;
+        document.getElementById('deleteConfirmModal').style.display = 'block';
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteConfirmModal').style.display = 'none';
+    }
+
+</script>

@@ -9,7 +9,7 @@ while ($row = mysqli_fetch_assoc($racesResult)) {
     $races[] = $row;
 }
 
-$driversResult = mysqli_query($conn, "SELECT id, firstname, lastname, racing_number, team_id FROM drivers");
+$driversResult = mysqli_query($conn, "SELECT id, firstname, lastname, racing_number, team_id, main_pic_path FROM drivers");
 $drivers = array();
 while ($row = mysqli_fetch_assoc($driversResult)) {
     $id = $row['id'];
@@ -18,7 +18,8 @@ while ($row = mysqli_fetch_assoc($driversResult)) {
     $drivers[$id] = array(
         'display' => $nameDisplay,
         'total_points' => 0,
-        'per_race' => array()
+        'per_race' => array(),
+        'main_pic_path' => $row['main_pic_path']
     );
 }
 
@@ -65,7 +66,7 @@ usort($drivers, function ($a, $b) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F1 Academy - Driver Standings</title>
     <link rel="stylesheet" href="Css/layout.css?v=1">
-    <link rel="stylesheet" href="Css/standings.css?v=1">
+    <link rel="stylesheet" href="Css/standings.css?v=2">
 </head>
 
 <body>
@@ -166,13 +167,19 @@ usort($drivers, function ($a, $b) {
                 </thead>
                 <tbody>
                     <?php foreach ($drivers as $driver) { ?>
-                        <tr>
-                            <td class="format"><?= $driver['display'] ?></td>
+                        <tr class="driver-row" style="animation-delay: <?= ($i++ * 0.05) ?>s;">
+                            <td class="driver-popup-wrapper">
+                                <span class="popup-trigger"><?= $driver['display'] ?></span>
+                                <div class="driver-popup">
+                                    <img src="<?= htmlspecialchars($driver['main_pic_path'] ?? 'Assets/Drivers/default.png') ?>"
+                                        alt="Driver Photo">
+                                </div>
+                            </td>
                             <td><?= $driver['total_points'] ?></td>
                             <?php foreach ($races as $race) {
-                                $racePoints = isset($driver['per_race'][$race['id']]) ? $driver['per_race'][$race['id']] : array();
-                                $r1 = isset($racePoints['R1']) ? $racePoints['R1'] : '-';
-                                $r2 = isset($racePoints['R2']) ? $racePoints['R2'] : '-';
+                                $racePoints = $driver['per_race'][$race['id']] ?? [];
+                                $r1 = $racePoints['R1'] ?? '-';
+                                $r2 = $racePoints['R2'] ?? '-';
                                 ?>
                                 <td><?= $r1 ?></td>
                                 <td><?= $r2 ?></td>
@@ -183,6 +190,7 @@ usort($drivers, function ($a, $b) {
             </table>
         </div>
     </main>
+
 
     <footer>
         <div class="footer_list">

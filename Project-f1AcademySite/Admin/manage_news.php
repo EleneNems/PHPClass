@@ -13,7 +13,9 @@ function old($key)
     <div class="card-wrapper">
         <?php while ($row = $result->fetch_assoc()) { ?>
             <div class="card news-card">
-                <img src="../<?= $row['photo_path'] ?>" alt="News Image">
+                <div class="image-wrapper">
+                    <img src="../<?= $row['photo_path'] ?>" alt="News Image">
+                </div>
                 <div class="card-content">
                     <h3><?= $row['Title'] ?></h3>
                     <p><strong><?= $row['Description'] ?></strong></p>

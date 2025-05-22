@@ -2,18 +2,17 @@
 include "includes/connect.php";
 include "includes/layout.php";
 include "includes/user_profile_box.php";
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>F1 Academy</title>
-    <link rel="stylesheet" href="Css/layout.css?v=8">
-    <link rel="stylesheet" href="Css/HomePage.css?v=8">
+    <link rel="stylesheet" href="Css/layout.css?v=8" />
+    <link rel="stylesheet" href="Css/homePage.css?v=9" />
 </head>
 
 <body>
@@ -23,7 +22,7 @@ include "includes/user_profile_box.php";
         <img src="Assets/Layout/Annoyed-bubble.png" class="annoyed-bubble" />
     </div>
 
-    <header>
+    <header data-aos="fade-down">
         <a href="index.php">
             <img src="Assets/Layout/F1AcademyLogo.svg" alt="A F1 academy logo" class="academy_logo">
         </a>
@@ -92,22 +91,16 @@ include "includes/user_profile_box.php";
     </header>
 
     <main>
-        <div class="home-section">
+        <div class="home-section" data-aos="zoom-in">
             <img src="Assets/Layout/HomePic.png" alt="F1 academy picture" class="home-bg">
             <div class="home-content">
-                <h1>FINDING THE NEXT GENERATION OF TALENT ON AND OFF TRACK</h1>
-                <p>
-                    F1 Academy is here to champion the next generation of female talent to explore their own motorsport
-                    journeys.
-                    By breaking down barriers to entry on track in the F1 Academy Racing Series and through grassroots
-                    initiatives
-                    such as F1 Academy Discover Your Drive, we hope to make motorsport more diverse, inclusive and
-                    accessible.
-                </p>
+                <h1 class="fade-slide">FINDING THE NEXT GENERATION OF TALENT ON AND OFF TRACK</h1>
+                <p class="fade-slide delay">F1 Academy is here to champion the next generation of female talent to
+                    explore their own motorsport journeys. By breaking down barriers to entry on track in the F1 Academy Racing Series and through grassroots initiatives such as F1 Academy Discover Your Drive, we hope to make motorsport more diverse, inclusive and accessible.</p>
             </div>
         </div>
 
-        <section class="news-section">
+        <section class="news-section" data-aos="fade-up">
             <div class="news_btn">
                 <h2 class="news-title">News</h2>
                 <div class="buttons">
@@ -128,11 +121,9 @@ include "includes/user_profile_box.php";
                             $month = strtoupper(date("M", strtotime($row['date'])));
                             $newsId = $row['id'];
                             ?>
-
-                            <a href="news.php?id=<?= $newsId ?>" class="news-card-link">
+                            <a href="news.php?id=<?= $newsId ?>" class="news-card-link" data-aos="fade-up">
                                 <div class="news-card">
-                                    <div class="news-image"
-                                        style="background-image: url('<?= $row['photo_path'] ?>'); background-size: cover; background-position: center;">
+                                    <div class="news-image" style="background-image: url('<?= $row['photo_path'] ?>');">
                                         <div class="news-date">
                                             <span class="day"><?= $day ?></span>
                                             <span class="month"><?= $month ?></span>
@@ -152,9 +143,8 @@ include "includes/user_profile_box.php";
             </div>
         </section>
 
-        <section class="stories-section">
+        <section class="stories-section" data-aos="fade-up">
             <h2 class="section-title">Our Community</h2>
-
             <div class="stories-inner">
                 <?php
                 $mainQuery = "SELECT s.id, s.title, s.story_pic_path, s.type, u.firstname, u.lastname FROM stories s JOIN users u ON s.author_id = u.id WHERE s.type IN ('main-story') ORDER BY s.created_at DESC LIMIT 1";
@@ -164,10 +154,9 @@ include "includes/user_profile_box.php";
                     $mainStory = mysqli_fetch_assoc($mainResult);
                     $fullname = $mainStory['firstname'] . ' ' . $mainStory['lastname'];
                     ?>
-                    <a href="story.php?id=<?= $mainStory['id'] ?>" class="main-story-container">
+                    <a href="story.php?id=<?= $mainStory['id'] ?>" class="main-story-container" data-aos="fade-up">
                         <div class="scrollable-content">
-                            <div class="story-image"
-                                style="background-image: url('<?= $mainStory['story_pic_path'] ?>'); background-size: cover; background-position: center;">
+                            <div class="story-image" style="background-image: url('<?= $mainStory['story_pic_path'] ?>');">
                             </div>
                             <div class="story-info">
                                 <span class="story-label"><?= $mainStory['type'] ?></span>
@@ -183,10 +172,10 @@ include "includes/user_profile_box.php";
                 <div class="story-list">
                     <?php
                     $otherQuery = "SELECT s.id, s.title, s.story_pic_path, s.type, u.firstname, u.lastname 
-                           FROM stories s 
-                           JOIN users u ON s.author_id = u.id 
-                           WHERE s.type IN ('Story', 'Interview', 'report') 
-                           ORDER BY s.created_at DESC LIMIT 6";
+                        FROM stories s 
+                        JOIN users u ON s.author_id = u.id 
+                        WHERE s.type IN ('Story', 'Interview', 'report') 
+                        ORDER BY s.created_at DESC LIMIT 6";
 
                     $otherResult = mysqli_query($conn, $otherQuery);
 
@@ -194,9 +183,8 @@ include "includes/user_profile_box.php";
                         while ($story = mysqli_fetch_assoc($otherResult)) {
                             $fullname = $story['firstname'] . ' ' . $story['lastname'];
                             ?>
-                            <a href="story.php?id=<?= $story['id'] ?>" class="story-card">
-                                <div class="story-image"
-                                    style="background-image: url('<?= $story['story_pic_path'] ?>'); background-size: cover; background-position: center;">
+                            <a href="story.php?id=<?= $story['id'] ?>" class="story-card" data-aos="fade-up">
+                                <div class="story-image" style="background-image: url('<?= $story['story_pic_path'] ?>');">
                                 </div>
                                 <div class="story-info">
                                     <span class="story-label"><?= $story['type'] ?></span>
@@ -213,8 +201,7 @@ include "includes/user_profile_box.php";
         </section>
     </main>
 
-
-    <footer>
+    <footer data-aos="fade-up">
         <div class="footer_list">
             <ul>
                 <li><a href="">TERMS OF USE</a></li>
@@ -256,30 +243,17 @@ include "includes/user_profile_box.php";
                         alt="Morgan Stanley"></a>
                 <a href="https://uk.puma.com/uk/en/sports/motorsport" class="partner_logo"><img
                         src="Assets/Layout/Puma.svg" alt="Puma"></a>
-                <a href="https://www.teamviewer.com/en-cis/" class="partner_logo"><img
-                        src="Assets/Layout/TeamViewer.svg" alt="TeamViewer"></a>
-                <a href="https://uk.tommy.com/" class="partner_logo"><img src="Assets/Layout/TommyHilfiger.svg"
-                        alt="Tommy Hilfiger"></a>
-                <a href="https://www.pirelli.com/tyres/en-ww/motorsport/home" class="partner_logo"><img
-                        src="Assets/Layout/Pirelli.svg" alt="Pirelli"></a>
             </div>
-            <hr class="dec_line">
-            <div class="partners_row">
-                <a href="https://www.tatuus.it/en" class="partner_logo"><img src="Assets/Layout/Tatuus.svg"
-                        alt="Tatuus"></a>
-                <a href="https://www.autotecnicamotori.it/" class="partner_logo"><img src="Assets/Layout/ATM.svg"
-                        alt="ATM"></a>
-                <a href="https://www.aramco.com/en" class="partner_logo"><img src="Assets/Layout/Aramco.svg"
-                        alt="Aramco"></a>
-            </div>
-        </div>
-        <hr>
-        <div class="footer_con">
-            <img src="Assets/Layout/F1AcademyLogo.svg" alt="A F1 academy logo" class="academy_logo">
-            <p>© 2025 F1 Academy Limited</p>
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+    </script>
     <script src="JS/Slider&Menu.js?v=1"></script>
     <script src="JS/Delete_account.js?v=2"></script>
     <script src="JS/Intro_animation.js?v=3"></script>

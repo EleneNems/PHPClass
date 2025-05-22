@@ -11,7 +11,8 @@ include "../includes/user_profile_box.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../Css/admin_dashboard.css?v=10">
+    <link rel="stylesheet" href="../Css/admin_dashboard.css?v=11">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
@@ -33,14 +34,15 @@ include "../includes/user_profile_box.php";
     <div class="admin-container">
         <aside>
             <ul>
-                <li><a href="?page=users">Users</a></li>
-                <li><a href="?page=teams">Teams</a></li>
-                <li><a href="?page=drivers">Drivers</a></li>
-                <li><a href="?page=news">News</a></li>
-                <li><a href="?page=races">Races</a></li>
-                <li><a href="?page=results">Upload Results</a></li>
+                <li><a href="?page=users"><i data-lucide="user"></i> Users</a></li>
+                <li><a href="?page=teams"><i data-lucide="flag"></i>Teams</a></li>
+                <li><a href="?page=drivers"> <i data-lucide="users"></i>Drivers</a></li>
+                <li><a href="?page=news"><i data-lucide="newspaper"></i> News</a></li>
+                <li><a href="?page=races"><i data-lucide="calendar-range"></i> Races</a></li>
+                <li><a href="?page=results"><i data-lucide="upload-cloud"></i> Upload Results</a></li>
             </ul>
         </aside>
+
 
         <main>
             <?php
@@ -137,7 +139,7 @@ include "../includes/user_profile_box.php";
         const userCounts = <?= json_encode($roleCounts) ?>;
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../JS/Charts.js"></script>
+    <script src="../JS/Charts.js?v=2"></script>
     <script>
         function toggleLogout() {
             const menu = document.getElementById("logoutMenu");
@@ -148,6 +150,8 @@ include "../includes/user_profile_box.php";
             const menu = document.getElementById("logoutMenu");
             if (menu) menu.style.display = "none";
         }
+
+        lucide.createIcons();
     </script>
 </body>
 

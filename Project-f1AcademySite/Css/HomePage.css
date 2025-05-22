@@ -243,7 +243,7 @@
   
 .scrollable-content{
     position: sticky;
-    top: calc(90px + 1rem); 
+    top: calc(80px + 1rem); 
     display: flex;
     flex-direction: column;
 }
@@ -375,5 +375,22 @@ a.main-story-container:hover{
 
     .story-card .story-image {
         height: 180px;
+    }
+}
+
+.fade-slide {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeSlideUp 1s ease-out forwards;
+}
+
+.fade-slide.delay {
+    animation-delay: 0.4s;
+}
+
+@keyframes fadeSlideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

@@ -18,7 +18,7 @@ $result = mysqli_query($conn, $query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F1 Academy-Drivers</title>
     <link rel="stylesheet" href="Css/layout.css?v=2">
-    <link rel="stylesheet" href="Css/drivers.css?v=2">
+    <link rel="stylesheet" href="Css/drivers.css?v=3">
 </head>
 
 <body>
@@ -88,7 +88,6 @@ $result = mysqli_query($conn, $query);
     </header>
 
     <main>
-
         <div class="text">
             <h2>F1 Academy Teams</h2>
             <hr>
@@ -96,8 +95,9 @@ $result = mysqli_query($conn, $query);
 
         <div class="driver-grid">
             <?php
+            $delay = 0.2;
             while ($driver = mysqli_fetch_assoc($result)) { ?>
-                <div class="driver-card">
+                <div class="driver-card fade-in-up" style="animation-delay: <?= $delay ?>s;">
                     <div class="driver-header">
                         <p><?= $driver['firstname'] ?></p>
                         <h2><?= $driver['lastname'] ?></h2>
@@ -109,9 +109,8 @@ $result = mysqli_query($conn, $query);
                     <img src="<?= $driver['main_pic_path'] ?>" alt="Driver Image" class="driver-img">
                     <div class="racing-number"><?= $driver['racing_number'] ?></div>
                 </div>
-                <?php
-            }
-            ?>
+                <?php $delay += 0.4; ?>
+            <?php } ?>
         </div>
     </main>
 

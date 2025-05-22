@@ -96,9 +96,14 @@ function old($key)
         }
     };
 
-    window.closeAddSessionModal = function () {
-        document.getElementById("addSessionModal").style.display = "none";
-    };
+    function closeAddSessionModal() {
+        const modal = document.getElementById("addSessionModal");
+        modal.classList.add("closing");
+        setTimeout(() => {
+            modal.style.display = "none";
+            modal.classList.remove("closing");
+        }, 300);
+    }
 
     window.onload = function () {
         const urlParams = new URLSearchParams(window.location.search);

@@ -6,9 +6,9 @@ $users = mysqli_query($conn, "SELECT id, firstname, lastname, email, role, creat
 ?>
 
 <div class="user-summary-cards">
-    <div class="card">👥 Total Users: <?= $totalUsers ?></div>
-    <div class="card">👑 Admins: <?= $totalAdmins ?></div>
-    <div class="card">🆕 New This Week: <?= $newUsers ?></div>
+    <div class="card"><i class="fas fa-users animated-icon"></i> Total Users: <?= $totalUsers ?></div>
+    <div class="card"><i class="fas fa-crown animated-icon"></i> Admins: <?= $totalAdmins ?></div>
+    <div class="card"><i class="fas fa-user-plus animated-icon"></i> New This Week: <?= $newUsers ?></div>
 </div>
 
 <div class="user-controls">
@@ -32,8 +32,11 @@ $users = mysqli_query($conn, "SELECT id, firstname, lastname, email, role, creat
         </tr>
     </thead>
     <tbody>
-        <?php while ($user = mysqli_fetch_assoc($users)){ ?>
-            <tr>
+        <?php
+        $i = 0;
+        while ($user = mysqli_fetch_assoc($users)) { ?>
+            <tr style="--i: <?= $i ?>;">
+                <?php $i++; ?>
                 <td><?= $user['firstname'] ?></td>
                 <td><?= $user['lastname'] ?></td>
                 <td><?= $user['email'] ?></td>
@@ -45,7 +48,8 @@ $users = mysqli_query($conn, "SELECT id, firstname, lastname, email, role, creat
                     <?php if ($user['role'] == 'user') { ?>
                         <form method="POST" action="Commands/promote_user.php" style="display:inline;">
                             <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                            <button type="submit" class="promote-btn">Promote to Admin</button>
+                            <button type="submit" <button type="submit" class="promote-btn"><i class="fas fa-arrow-up"></i>
+                                Promote To Admin</button>
                         </form>
                     <?php } elseif (
                         $user['role'] == 'admin' &&
@@ -55,7 +59,7 @@ $users = mysqli_query($conn, "SELECT id, firstname, lastname, email, role, creat
                     ) { ?>
                         <form method="POST" action="Commands/demote_user.php" style="display:inline;">
                             <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                            <button type="submit" class="demote-btn">Demote to User</button>
+                            <button type="submit" class="demote-btn"><i class="fas fa-arrow-down"></i> Demote To User</button>
                         </form>
                     <?php } ?>
                 </td>

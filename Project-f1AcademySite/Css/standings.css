@@ -52,6 +52,10 @@ table{
     margin-bottom: 20px;
 }
 
+th {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
 th, td{
     border: 1px solid #c3047c;
     padding: 10px;
@@ -77,4 +81,111 @@ thead{
 .number{
     color: #c3047c;
     font-weight: bold;
+}
+
+.standings-container{
+    position: relative;
+    overflow: visible;
+}
+
+.driver-popup-wrapper{
+    position: relative;
+}
+
+.driver-popup{
+    display: none;
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 12px;
+    padding: 8px;
+    border-radius: 8px;
+    z-index: 999;
+    width: 150px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.driver-popup img{
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.driver-row:hover .driver-popup{
+    display: block;
+}
+
+
+.standings-container{
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease forwards;
+}
+
+@keyframes fadeInUp{
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-row{
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeRow 0.5s ease forwards;
+}
+
+@keyframes fadeRow{
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+tbody tr:hover{
+    background-color: rgba(255, 0, 255, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.tab{
+    position: relative;
+    padding: 10px 20px;
+    color: white;
+    font-weight: bold;
+}
+
+.tab::after{
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #ff0080;
+    transition: width 0.3s ease;
+}
+
+.tab.active::after{
+    width: 100%;
+}
+
+th:hover {
+    transform: scale(1.05);
+    color: #ff00cc;
+}
+
+@keyframes fadeInUp{
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.driver-row{
+    animation: fadeInUp 0.4s ease both;
 }

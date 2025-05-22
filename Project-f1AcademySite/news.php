@@ -27,10 +27,11 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
     <title><?= $news['title'] ?></title>
     <link rel="stylesheet" href="Css/layout.css?v=2">
     <link rel="stylesheet" href="Css/story-news.css?v=1">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 
 <body>
-    <header>
+    <header data-aos="fade-down" data-aos-duration="1000">
         <a href="index.php">
             <img src="Assets/Layout/F1AcademyLogo.svg" alt="A F1 academy logo" class="academy_logo">
         </a>
@@ -46,11 +47,11 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
             <div class="profile" onclick="toggleLogout()">
                 <p class="username"><?= $fullName ?></p>
 
-                <div class="logout-menu" id="logoutMenu">
+                <div class="logout-menu" id="logoutMenu" data-aos="fade-left">
                     <?php if ($isAdmin) { ?>
                         <a href="Admin/admin_dashboard.php">View as Admin</a>
-                    <?php } elseif ($isAdmin) { ?>
-                        <a href="../index.php">View as User</a>
+                    <?php } else { ?>
+                        <a href="index.php">View as User</a>
                     <?php } ?>
                     <a href="post_story.php">Post a Story</a>
                     <a href="my_stories.php">My Stories</a>
@@ -96,8 +97,7 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
     </header>
 
     <main>
-        <div class="story-page">
-
+        <div class="story-page" data-aos="fade-up" data-aos-duration="1000">
             <h1><?= $news['title'] ?></h1>
 
             <?php
@@ -106,7 +106,7 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
             ?>
             <p class="news-date"><?= $formattedDate ?></p>
 
-            <img src="<?= $news['photo_path'] ?>" alt="Main News Image">
+            <img src="<?= $news['photo_path'] ?>" alt="Main News Image" data-aos="zoom-in" data-aos-duration="800">
 
             <div class="story-content">
                 <?php
@@ -117,14 +117,14 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
                 $realParaCount = 0;
 
                 foreach ($paragraphs as $para) {
-                    echo "<p>" . $para . "</p>";
+                    echo "<p data-aos='fade-up' data-aos-duration='800'>" . $para . "</p>";
                     $realParaCount++;
 
                     if ($realParaCount % 4 === 0 && isset($images[$imgIndex])) {
                         $imagePath = $images[$imgIndex]['image_path'];
                         $caption = $images[$imgIndex]['caption'];
                         echo "
-            <div class='inline-photo'>
+            <div class='inline-photo' data-aos='fade-up' data-aos-duration='800'>
                 <img src='$imagePath' alt='News image'>
                 <p class='photo-caption'>$caption</p>
             </div>
@@ -137,8 +137,7 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
         </div>
     </main>
 
-
-    <footer>
+    <footer data-aos="fade-up" data-aos-duration="1000">
         <div class="footer_list">
             <ul>
                 <li><a href="">TERMS OF USE</a></li>
@@ -150,7 +149,7 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
                 <li><a href="">PRIVACY MANAGER GDPR</a></li>
             </ul>
 
-            <div class="social-icons">
+            <div class="social-icons" data-aos="zoom-in">
                 <div class="icon_con"><a href="https://instagram.com" target="_blank"><i
                             class="fab fa-instagram"></i></a></div>
                 <div class="icon_con"><a href="https://twitter.com" target="_blank"><i class="fab fa-x-twitter"></i></a>
@@ -162,10 +161,10 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
 
         <hr>
 
-        <div class="footer_text">OUR PARTNERS</div>
+        <div class="footer_text" data-aos="fade-right">OUR PARTNERS</div>
 
         <div class="partner_cont">
-            <div class="partners_row">
+            <div class="partners_row" data-aos="fade-up">
                 <a href="https://www.tagheuer.com/int/en/" class="partner_logo"><img src="Assets/Layout/TagHeuer.svg"
                         alt="Tag Heuer"></a>
                 <a href="https://www.americanexpress.com/" class="partner_logo"><img
@@ -175,7 +174,7 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
                 <a href="https://www.morethanequal.com/" class="partner_logo"><img src="Assets/Layout/MoreThanEqual.svg"
                         alt="More Than Equal"></a>
             </div>
-            <div class="partners_row">
+            <div class="partners_row" data-aos="fade-up" data-aos-delay="100">
                 <a href="https://www.morganstanley.com/" class="partner_logo"><img src="Assets/Layout/MorganStanley.svg"
                         alt="Morgan Stanley"></a>
                 <a href="https://uk.puma.com/uk/en/sports/motorsport" class="partner_logo"><img
@@ -188,7 +187,7 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
                         src="Assets/Layout/Pirelli.svg" alt="Pirelli"></a>
             </div>
             <hr class="dec_line">
-            <div class="partners_row">
+            <div class="partners_row" data-aos="fade-up" data-aos-delay="200">
                 <a href="https://www.tatuus.it/en" class="partner_logo"><img src="Assets/Layout/Tatuus.svg"
                         alt="Tatuus"></a>
                 <a href="https://www.autotecnicamotori.it/" class="partner_logo"><img src="Assets/Layout/ATM.svg"
@@ -205,6 +204,10 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
     </footer>
     <script src="JS/Slider&Menu.js?v=2"></script>
     <script src="JS/Delete_account.js?v=2"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 </body>
 
 </html>

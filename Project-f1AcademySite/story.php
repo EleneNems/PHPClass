@@ -50,8 +50,8 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
                 <div class="logout-menu" id="logoutMenu">
                     <?php if ($isAdmin) { ?>
                         <a href="Admin/admin_dashboard.php">View as Admin</a>
-                    <?php } elseif ($isAdmin) { ?>
-                        <a href="../index.php">View as User</a>
+                    <?php } else { ?>
+                        <a href="index.php">View as User</a>
                     <?php } ?>
                     <a href="post_story.php">Post a Story</a>
                     <a href="my_stories.php">My Stories</a>
@@ -97,21 +97,17 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
     </header>
 
     <main>
-        <div class="story-page">
-
-            <h1><?= $story['title'] ?></h1>
-
-            <span><?= $story['type'] ?></span>
-            <p class="name">By: <?= $story['firstname'] . ' ' . $story['lastname'] ?></p>
+        <div class="story-page" data-aos="fade-up">
+            <h1 data-aos="fade-up"><?= $story['title'] ?></h1>
+            <span data-aos="fade-up"><?= $story['type'] ?></span>
+            <p class="name" data-aos="fade-up">By: <?= $story['firstname'] . ' ' . $story['lastname'] ?></p>
             <?php
             $date = new DateTime($story['created_at']);
             $formattedDate = $date->format('F j, Y');
             ?>
-            <p class="news-date"><?= $formattedDate ?></p>
+            <p class="news-date" data-aos="fade-up"><?= $formattedDate ?></p>
 
-
-            <img src="<?= $story['story_pic_path'] ?>" alt="Main Story Image">
-
+            <img src="<?= $story['story_pic_path'] ?>" alt="Main Story Image" data-aos="fade-up">
 
             <div class="story-content">
                 <?php
@@ -122,18 +118,18 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
                 $realParaCount = 0;
 
                 foreach ($paragraphs as $para) {
-                    echo "<p>" . $para . "</p>";
+                    echo "<p data-aos='fade-up'>" . $para . "</p>";
                     $realParaCount++;
 
                     if ($realParaCount % 4 === 0 && isset($images[$imgIndex])) {
                         $imagePath = $images[$imgIndex]['image_path'];
                         $caption = htmlspecialchars($images[$imgIndex]['caption']);
                         echo "
-                    <div class='inline-photo'>
-                        <img src='$imagePath' alt='Story image'>
-                        <p class='photo-caption'>$caption</p>
-                    </div>
-                    ";
+                        <div class='inline-photo' data-aos='fade-up'>
+                            <img src='$imagePath' alt='Story image'>
+                            <p class='photo-caption'>$caption</p>
+                        </div>
+                        ";
                         $imgIndex++;
                     }
                 }
@@ -141,38 +137,38 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
             </div>
         </div>
 
-        <div class="comments-section">
-            <h2>Comments</h2>
+        <div class="comments-section" data-aos="fade-up">
+            <h2 data-aos="fade-up">Comments</h2>
             <?php
             $commentQuery = "SELECT c.id, c.comment_text, c.created_at, c.user_id, c.is_edited, u.firstname, u.lastname FROM comments c JOIN users u ON c.user_id = u.id WHERE c.story_id = $storyId ORDER BY c.created_at DESC";
-
             $commentResult = mysqli_query($conn, $commentQuery);
 
-            if (isset($_SESSION['email']) && $_SESSION['role'] === 'user') {
+            if (isset($_SESSION['email'])) {
                 $currentUserEmail = $_SESSION['email'];
                 $userQuery = mysqli_query($conn, "SELECT id FROM users WHERE email = '$currentUserEmail'");
                 $currentUser = mysqli_fetch_assoc($userQuery);
                 $currentUserId = $currentUser['id'];
             }
 
-            if (isset($_SESSION['email']) && $_SESSION['role'] === 'user') {
-                ?>
-                <form method="POST" class="comment-form" action="includes/comment_logic.php">
+            if (isset($_SESSION['email'])) {
+            ?>
+                <form method="POST" class="comment-form" action="includes/comment_logic.php" data-aos="fade-up">
                     <div class="textarea-wrapper">
                         <textarea name="comment_text" maxlength="500" placeholder="Write your comment here..."></textarea>
                         <button type="submit" name="post_comment">Post</button>
                     </div>
                     <input type="hidden" name="story_id" value="<?= $storyId ?>">
                 </form>
-
-                <?php
+            <?php
+            } else {
+                echo "<p data-aos='fade-up'><strong>Sign in to comment!</strong></p>";
             }
 
             if ($commentResult && mysqli_num_rows($commentResult) > 0) {
                 while ($comment = mysqli_fetch_assoc($commentResult)) {
                     $commentDate = (new DateTime($comment['created_at']))->format('F j, Y H:i');
-                    ?>
-                    <div class="comment">
+            ?>
+                    <div class="comment" data-aos="fade-up">
                         <p class="comment-author">
                             <?= $comment['firstname'] . ' ' . $comment['lastname'] ?>
                             <?php if ($comment['is_edited']) { ?>
@@ -180,17 +176,14 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
                             <?php } ?>
                             <span class="comment-date"><?= $commentDate ?></span>
                         </p>
-
                         <div class="comment-body">
                             <p class="comment-text" id="comment-text-<?= $comment['id'] ?>">
                                 <?= htmlspecialchars($comment['comment_text']) ?>
                             </p>
-
                             <?php if (isset($currentUserId) && $comment['user_id'] == $currentUserId) { ?>
                                 <div class="comment-actions">
                                     <button onclick="startEdit(<?= $comment['id'] ?>)">Edit</button>
-                                    <form method="POST" action="includes/comment_logic.php" class="inline-form"
-                                        style="display:inline;">
+                                    <form method="POST" action="includes/comment_logic.php" class="inline-form" style="display:inline;">
                                         <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
                                         <input type="hidden" name="story_id" value="<?= $storyId ?>">
                                         <button type="submit" name="delete_comment">Delete</button>
@@ -199,29 +192,24 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
                             <?php } ?>
                         </div>
 
-                        <form method="POST" action="includes/comment_logic.php" id="edit-form-<?= $comment['id'] ?>"
-                            style="display:none;" class="edit-form">
+                        <form method="POST" action="includes/comment_logic.php" id="edit-form-<?= $comment['id'] ?>" style="display:none;" class="edit-form">
                             <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
                             <input type="hidden" name="story_id" value="<?= $storyId ?>">
-                            <textarea name="edited_text" id="edit-text-<?= $comment['id'] ?>"
-                                required><?= htmlspecialchars($comment['comment_text']) ?></textarea>
+                            <textarea name="edited_text" id="edit-text-<?= $comment['id'] ?>" required><?= htmlspecialchars($comment['comment_text']) ?></textarea>
                             <button type="submit" name="edit_comment">Save</button>
                             <button type="button" onclick="cancelEdit(<?= $comment['id'] ?>)">Cancel</button>
                         </form>
                     </div>
-
-                    <?php
+            <?php
                 }
-                ?>
-                <?php
-            } else { ?>
-                <p>No comments yet. Be the first to comment!</p>
-                <?php
-            } ?>
+            } else {
+                echo "<p data-aos='fade-up'>No comments yet. Be the first to comment!</p>";
+            }
+            ?>
         </div>
     </main>
 
-    <footer>
+    <footer data-aos="fade-up">
         <div class="footer_list">
             <ul>
                 <li><a href="">TERMS OF USE</a></li>
@@ -289,6 +277,10 @@ while ($img = mysqli_fetch_assoc($imgResult)) {
     <script src="JS/Slider&Menu.js"></script>
     <script src="JS/Comment.js"></script>
     <script src="JS/Delete_account.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 </body>
 
 </html>

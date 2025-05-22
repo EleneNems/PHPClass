@@ -12,11 +12,15 @@ new Chart(ctxMostCommented, {
     options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: {
+            duration: 1200,
+            easing: 'easeOutBounce'
+        },
         plugins: {
             title: {
                 display: true,
                 text: 'Most Commented Story Types',
-                color : 'white'
+                color: 'white'
             }
         }
     }
@@ -35,12 +39,15 @@ new Chart(ctxStoryTypes, {
     options: {
         responsive: true,
         maintainAspectRatio: false,
-
+        animation: {
+            duration: 1000,
+            easing: 'easeOutCirc'
+        },
         plugins: {
             title: {
                 display: true,
                 text: 'Types of Stories Posted by Users',
-                color : 'white'
+                color: 'white'
             }
         }
     }
@@ -59,11 +66,15 @@ new Chart(ctxUserRoles, {
     options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: {
+            duration: 1000,
+            easing: 'easeInOutQuart'
+        },
         plugins: {
             title: {
                 display: true,
                 text: 'Distribution of User Roles',
-                color : 'white'
+                color: 'white'
             }
         }
     }

@@ -70,7 +70,7 @@ usort($teams, function ($a, $b) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F1 Academy-Standings</title>
     <link rel="stylesheet" href="Css/layout.css?v=2">
-    <link rel="stylesheet" href="Css/standings.css?v=1">
+    <link rel="stylesheet" href="Css/standings.css?v=3">
 </head>
 
 <body>
@@ -178,25 +178,23 @@ usort($teams, function ($a, $b) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($teams as $team) { ?>
-                        <tr>
+                    <?php
+                    $delay = 0;
+                    foreach ($teams as $team) { ?>
+                        <tr class="fade-row" style="animation-delay: <?= $delay ?>s;">
                             <td><?= $team['name'] ?></td>
                             <td><?= $team['total_points'] ?></td>
-                            <?php foreach ($races as $race) { ?>
-                                <?php
+                            <?php foreach ($races as $race) {
                                 $racePoints = isset($team['per_race'][$race['id']]) ? $team['per_race'][$race['id']] : array();
                                 $r1 = isset($racePoints['R1']) ? $racePoints['R1'] : '-';
                                 $r2 = isset($racePoints['R2']) ? $racePoints['R2'] : '-';
                                 ?>
                                 <td><?= $r1 ?></td>
-                                <td><?= $r2; ?></td>
-                                <?php
-                            }
-                            ?>
+                                <td><?= $r2 ?></td>
+                            <?php } ?>
                         </tr>
-                        <?php
-                    }
-                    ?>
+                        <?php $delay += 0.1;
+                    } ?>
                 </tbody>
             </table>
         </div>

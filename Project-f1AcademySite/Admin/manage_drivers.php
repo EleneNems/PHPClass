@@ -13,9 +13,8 @@ $old = fn($key) => htmlspecialchars($_GET[$key] ?? '');
 ?>
 
 <div class="team-summary-cards">
-    <div class="card">🚗 Total Drivers: <?= $driverCount ?></div>
+    <div class="card"><i class="fas fa-car-side animated-icon"></i> Total Drivers: <?= $driverCount ?></div>
 </div>
-
 
 <div class="user-controls">
     <input type="text" id="driverSearch" placeholder="Search by name..." onkeyup="filterDrivers()">
@@ -64,8 +63,8 @@ $old = fn($key) => htmlspecialchars($_GET[$key] ?? '');
     </tbody>
 </table>
 
-<div class="card add-team-card" onclick="openDriverModal()">
-    ➕ Add New Driver
+<div class="card add-team-card" onclick="openTeamModal()">
+    <i class="fas fa-plus-circle animated-icon"></i> Add New Team
 </div>
 
 <div id="driverModal" class="modal" style="display: <?= isset($_GET['firstnameErr']) ? 'block' : 'none' ?>;">
