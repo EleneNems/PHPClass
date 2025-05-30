@@ -1,0 +1,7 @@
+header, main, footer{
+    min-height: 200px;
+    border: solid 1px blue;
+    margin: 10px auto;
+    width: 80%;
+    background-color: lightblue;
+}
